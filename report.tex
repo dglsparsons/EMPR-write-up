@@ -12,6 +12,32 @@
 \fancyfoot[LO,CE]{Chapter \thechapter}
 \fancyfoot[CO,RE]{Douglas Parsons}
 
+% Rewritten the Chapter settings, in order to remove the stupid 50Space 
+% Indent from the top of the page. 
+\makeatletter
+\def\@makechapterhead#1{%
+    \vspace*{10\p@}% %%% removed!
+    {\parindent \z@ \raggedright \normalfont
+        \ifnum \c@secnumdepth >\m@ne
+        \huge\bfseries \@chapapp\space \thechapter
+        \par\nobreak
+        \vskip 20\p@
+        \fi
+        \interlinepenalty\@M
+        \Huge \bfseries #1\par\nobreak
+        \vskip 40\p@
+}}
+\def\@makeschapterhead#1{%
+    \vspace*{10\p@}%
+    %%% removed!
+    {\parindent \z@ \raggedright
+        \normalfont
+        \interlinepenalty\@M
+        \Huge \bfseries  #1\par\nobreak
+        \vskip 40\p@
+}}
+\makeatother
+
 \begin{document}
 \input{./title.tex}
 \tableofcontents
@@ -24,7 +50,7 @@
 \chapter{Evaluation and Testing of Team-based Solution}
 \input{chapter4.tex}
 \chapter{Description, Discussion, Testing and Evaluation of Individual 
-            Component}
+Component}
 \input{chapter5.tex}
 \chapter{Summary and Conclusions}
 \input{chapter6.tex}
