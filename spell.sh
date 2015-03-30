@@ -1,5 +1,4 @@
 #!/bin/bash
-aspell -t -c report.tex
 aspell -t -c chapter1.tex
 aspell -t -c chapter2.tex
 aspell -t -c chapter3.tex
@@ -7,7 +6,6 @@ aspell -t -c chapter4.tex
 aspell -t -c chapter5.tex
 aspell -t -c chapter6.tex
 
-ispell -t report.tex
 ispell -t chapter1.tex
 ispell -t chapter2.tex
 ispell -t chapter3.tex
