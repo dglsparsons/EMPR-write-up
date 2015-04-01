@@ -4,9 +4,48 @@
 % implementation of the work.
 \section{Description of the Team Solution}
 
+The end product of our team solution was a successful working product. Through the 
+incorporation of a Linux style shell into the group solution, we managed to produce 
+a highly configurable single solution that managed to satisfy each section of 
+specification. In addition the group solution contained two custom built speakers, 
+capable of being powered by the 5V voltage rails from the peripherals board. 
+The solution had a strong user interface, allowing the user to type in commands 
+through the computer keyboard to adjust settings and select modes, set an id 
+to filter channels out, and display information, or custom text on the mbed 
+board. In addition it was also possible to adjust volume, channel and display 
+information on the mbed board using the 16 digit keypad. This high level of 
+user interfacing allowed settings to be flexibly turned on and off, and 
+avoided the need to be continually re-installing binaries to the device. 
+By typing in the command "listen", the mbed would then initialise the CAN bus 
+and begin receiving packets. These could be printed out to the screen by issuing
+a further command, or they could be used to generate audio tones. It is also 
+possible to filter out data according to a preset id by issuing a command, or 
+using the keypad. For each data element received, audio tones can be generated. 
+The solution supports a full synthesis, allowing multiple notes to be played
+on each channel, and multiple channels to play notes simultaneously. In addition 
+the audio output also implemented an 'attack-sustain-release' model, creating a 
+more realistic sounding solution. The audio code used direct memory access (DMA)
+to provide a reduced processing cost in outputting the audio samples.
+The user could also choose to display useful information such as the current 
+song name, the volume, or the channel names on the computer screen or on the 
+MBED board in a variety of ways. For example they could be statically printed on
+the MBED board, or scrolled across the LCD display, or even printed out to 
+the terminal on the computer.
+
 \section{How the problem was broken down for individual members}
 
+The breakdown of our solution into components individual members could work on 
+was a great strength of our team. Each person worked on as aspect of the project 
+that they found interesting, and throughout the project we had regular feedback 
+on all our work in order to make sure we were meeting our specifications and 
+that nobody was out of their depth. Below I have divided up the work that each 
+individual completed during the duration of the project.
+
 \subsection*{Mingzhao Zhao}
+Mingzhao's work was primarily focused on handling the 16 digit keypad on the 
+mbed board, this board was configured to be interrupt based rather than being 
+polled. This caused additinal problems with bouncy switches sending multiple 
+interrupts and race conditions to occur within the interrupt handler.
 
 \subsection*{Shivam Mistry}
 
