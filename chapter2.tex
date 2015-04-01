@@ -13,11 +13,11 @@ situated on a board of peripheral accessories. The microcontroller consists of
 an interface board coupled with the ARM cortex-M3 based LPC1768, providing easy 
 interaction via USB cable to transfer binaries, and simplifying the process of 
 serial communication [how-mbed-works].
-
+\par\bigskip\noindent
 The MBED board is sat on a board of peripheral accessories, as pictured below. 
-\par
+\par\bigskip
 \includegraphics[width=0.80\textwidth]{./mbed_board}
-\par
+\par\bigskip\noindent
 The board contains multiple accessories that the MBED board can interface with 
 in various ways to fulfil the requirements, and allowing many options for 
 individual extensions. The accessories on the board include: a 16 key keyboard, 
@@ -25,6 +25,7 @@ a 16 by 2 line LCD, four seven segment displays, a micro SD slot, a USB host
 connection, CAN bus connecter, audio in and out jacks, a TCP/IP connection, as 
 well as off board connections to users hardware. 
 
+\par\bigskip\noindent
 The group task consisted of multiple different challenges, with the concept
 that the MBED board would continually receive CAN packets, filter out those 
 that do not match a user selectable id, decode the CAN packets, and play notes 
@@ -32,6 +33,7 @@ corresponding to the frequencies, volumes, and durations that were specified in
 the CAN packets. In addition the user must be able to view useful information, 
 select the channel id, and adjust the volume. 
 
+\par\bigskip\noindent
 In addition there was an individual component. This did not have to match any 
 specification, and was instead left up to each person to decide on their own 
 extension to the group project. For my individual extension, I implemented a 
@@ -40,6 +42,7 @@ by typing commands into a terminal on their computer, effectively adding an
 additional element of user control that is more intuitive and responsive than 
 using the 16 digit keypad from the MBED board.
 
+\par\bigskip\noindent
 For our group solution, the specification was broken down into three separate 
 areas, allowing us to focus our expertise and interests on what suited us best.
 The breakdown of the three sections was as follows: The receiving and 
@@ -58,7 +61,7 @@ However, due to the nature of the CAN packets, a very large number can arrive in
 a comparatively short space of time. This therefore requires a highly optimised 
 solution, in order to prevent packets either being missed, or race conditions 
 within the interrupt handler from occuring. 
-\par
+\par\bigskip\noindent
 The second technical challenge of the project is the generation of audio tones 
 corresponding to frequencies, durations and volume levels as specified by the CAN 
 packets. The CAN packets do not contain information detailing what each note 
@@ -79,7 +82,7 @@ compute, and furthermore, an increase in the number of notes can drastically
 increase the processing time. A delay in the output of the notes can lead to 
 a strange sounding finished product, so the efficiency of any synthesis 
 calculations are paramount to the end product. 
-\par
+\par\bigskip\noindent
 The third technical challenge that can be presented is the user's control over 
 the device. The specification determines that the user must be able to control 
 the volume of the output, alter which channel of notes is being played, 
