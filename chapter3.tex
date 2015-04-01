@@ -43,9 +43,14 @@ individual completed during the duration of the project.
 
 \subsection*{Mingzhao Zhao}
 Mingzhao's work was primarily focused on handling the 16 digit keypad on the 
-mbed board, this board was configured to be interrupt based rather than being 
-polled. This caused additinal problems with bouncy switches sending multiple 
-interrupts and race conditions to occur within the interrupt handler.
+mbed board, this board was configured to be interrupt based as opponed to  being 
+polled. This caused additinal problems with bounce on the switches, this 
+caused multiple interrupts and race conditions to occur within the interrupt 
+handler. Due to the row/column method in which the key pad is scanned, the 
+number of 'bounces' was reduced significantly by only permitting certain 
+input values to register, and then reduced further by only allowing a keypress 
+once every half a second to do anthing. This method of debounce was achieved 
+using a SysTick to act as a timer. 
 
 \subsection*{Shivam Mistry}
 
