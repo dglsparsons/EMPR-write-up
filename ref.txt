@@ -1,1 +1,2 @@
 [how-mbed-works] http://developer.mbed.org/handbook/How-mbed-works
+[pete-page] http://www-module.cs.york.ac.uk/empr/mbed_resources/
