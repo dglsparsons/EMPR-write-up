@@ -29,15 +29,15 @@ well as off board connections to users hardware.
 The group task consisted of multiple different challenges, with the concept
 that the MBED board would continually receive CAN packets, filter out those 
 that do not match a user selectable id, decode the CAN packets, and play notes 
-corresponding to the frequencies, volumes, and durations that were specified in 
-the CAN packets. In addition the user must be able to view useful information, 
-select the channel id, and adjust the volume. 
+corresponding to the frequency, volume, and duration that were specified from 
+the CAN transmissions. In addition the user must be able to view useful 
+information, select the channel id, and adjust the volume. 
 
 \par\bigskip\noindent
 In addition there was an individual component. This did not have to match any 
 specification, and was instead left up to each person to decide on their own 
 extension to the group project. For my individual extension, I implemented a 
-linux shell style user interface. This allows user to interact with the device 
+Linux shell style user interface. This allows user to interact with the device 
 by typing commands into a terminal on their computer, effectively adding an 
 additional element of user control that is more intuitive and responsive than 
 using the 16 digit keypad from the MBED board.
@@ -47,8 +47,8 @@ For our group solution, the specification was broken down into three separate
 areas, allowing us to focus our expertise and interests on what suited us best.
 The breakdown of the three sections was as follows: The receiving and 
 decoding of CAN packets (CAN bus), generation of audio samples corresponding to 
-frequencies, durations and volume (Audio), and the ability for the user to 
-interface with the device in order to adjust settings (User Interface). 
+frequency, duration and volume (Audio), and the ability for the user to 
+interact with the device in order to adjust settings (User Interface). 
 
 \section{Discussion of Technical Aspects and Challenges}
 
@@ -60,10 +60,10 @@ timed intervals, the solution to this problem is required to be interrupt based.
 However, due to the nature of the CAN packets, a very large number can arrive in 
 a comparatively short space of time. This therefore requires a highly optimised 
 solution, in order to prevent packets either being missed, or race conditions 
-within the interrupt handler from occuring. 
+within the interrupt handler from occurring. 
 \par\bigskip\noindent
 The second technical challenge of the project is the generation of audio tones 
-corresponding to frequencies, durations and volume levels as specified by the CAN 
+corresponding to frequency, duration and volume levels as specified by the CAN 
 packets. The CAN packets do not contain information detailing what each note 
 should sound like. As a result, all musical notes need to be generated from 
 first principals, for example using a look up table detailing values for a note 
@@ -89,7 +89,7 @@ the volume of the output, alter which channel of notes is being played,
 and view useful information on the MBED board. This requires a level of
 interaction, most likely via the 16 digit keypad on the device, however this 
 could be via alternate input methods, such as a computer keyboard. The user's 
-interraction with either device once again may not be continual, but may either 
+interaction with either device once again may not be continual, but may either 
 be polled, at the cost of system resources, or interrupt based. Further 
 challenges are presented as any possible user input must be stored on the device, 
 parsed on command, and then the desired command must be executed without any 
