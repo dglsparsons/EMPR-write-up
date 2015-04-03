@@ -61,7 +61,14 @@ allocator allowing the additional memory to be used constructively, further
 optimising the system. 
 
 \subsection*{Myself (Douglas Parsons)}
-
+Following the mini projects, and from reviewing the specification, it was clear 
+that a strong level of user interaction with the device would provide valuable 
+debugging tools, could potentially allow settings to be changed without 
+reinstalling binaries on the device, and could be used for a wide range of 
+useful functions, such as changing the volume or displaying song information. 
+From the mini projects it became clear that the 16 digit keypad attached to the 
+mbed would not provide a strong level of user interaction, so instead I focused 
+on allowing a further degree of interaction via the computer keypad.
 
 \subsection*{Liam Fraser}
 Liam has a strong background in music technology, taking the subject at A-level,
@@ -76,43 +83,57 @@ code more efficient.
 
 \section{Technical innovation and implementation of each member}
 \subsection*{Mingzhao Zhao}
-Mingzhao's work was primarily focused on handling the 16 digit keypad on the 
-mbed board, this board was configured to be interrupt based as opposed to  being 
-polled. This caused additional problems with bounce on the switches, this 
-caused multiple interrupts and race conditions to occur within the interrupt 
-handler. Due to the row/column method in which the key pad is scanned, the 
-number of 'bounces' was reduced significantly by only permitting certain 
-input values to register, and then reduced further by only allowing a single key 
-press every half a second. This method of debounce was achieved using a system 
-timer (SysTick) to count the time between successive key presses, and disregard 
-any that occurred too closely together. 
+Mingzhao's work was primarily focused on implementing interaction via 
+the 16 digit keypad on the mbed board. The keypad was set up in the mini-projects 
+to allow user ineraction through continually polling the keypad. However, due 
+to the limited speed of the processer it was decided that a better solution 
+would be to use an interrupt based system.
+However, this caused additional problems with bounce on the switches: 
+multiple interrupts could occur in a very short space of time due to bounces on 
+the switches. Many of these interrupts generated were redundant, or gave 
+nonsensical input values, and furthermore their rapidity caused race conditions 
+to occur within the interrupt handler. 
+Due to the row/column method in which the key pad is scanned, the 
+number of bounces was reduced significantly by filtering out any inputs that 
+did not match one of the keys pressed. The switch bounces were then reduced 
+further by only allowing a single key press every half a second. 
+This method of debounce was implemented using a system 
+timer (SysTick) to count the time between successive key presses. Any key 
+presses that occured too closely together were disregarded. 
 
 \subsection*{Shivam Mistry}
 Shivam initially targeted the CAN bus, and was able to rapidly achieve a fully 
 functioning prototype. The original solution processed each packet as it was 
-received. As the complexity of songs increased it became obvious that this 
-rudimentary method was not going to be sufficient when many CAN packets were 
-arriving in a short space of time. In order to improve the functionality the 
-packets were instead added to a queue, which was continually processed. This 
-removed the requirement of each packet being processed as it was received, and 
-allowed a more streamlined solution. Shivam's contribution also included the 
-reverse engineering and decoding of the CAN bus packets received. Not only did 
-his solution test the check-sum of each packet to ensure that it had been 
-correctly received, but also later implemented a text parser, allowing the 
-text packets which were sent prior to each song containing useful information 
-to be stripped down to only the required information. 
+received. However, as the complexity of songs increased it became clear that this 
+simplistic method was not going to be sufficient when many CAN packets require 
+processing in a short space of time.
+In order to improve the functionality, a queue was implemented. Packets were 
+added to the queue on being received, and processed whenever there was sufficient
+processer resources available.
+This removed the requirement of each packet being processed as it was received,
+ and therefore provided a clean, efficient solution.
+Shivam's contribution also included the reverse engineering and decoding of any
+ CAN packets received through testing their check-sum, and parsing any received 
+text.
+As the check-sum method was not specified in any documentation, the first 
+challenge was determining what the check-sum corresponded to. Values that did 
+not match the length specified by the check-sum were not processed, and therefore 
+could not have any impact on the system. Furthermore, the text packets sent prior 
+to each song being played required parsing in order to extract any useful 
+information. Therefore, a text parser, extracting the useful information from 
+these packets to the device was implemented using a state based solution. 
 
 Furthermore, following an 
 instance where the physical memory (RAM) on the device was fully used up, Shivam 
-discovered that the device contains an additional 32Kb of memory that is 
-typically reserved for communicating to a USB or Ethernet device (in addition 
-to the original 32Kb). However, due to the inaccessible status of this memory, 
-a memory allocator was required for it to be accessed. Therefore, Shivam made a 
-memory allocator that allowed access to this additional memory, effectively 
-allowing us to store a much larger amount of information on the device. In 
-addition, the look-up table that the memory allocator used was stored in the 
-additional memory, and hence had no impact otherwise on the functionality of the 
-device. 
+discovered that the device contains an additional 32Kb of memory, 
+typically reserved for communicating to a USB or Ethernet device. However, 
+due to the reserved status of this memory, a memory allocator was required for 
+it to be utilised. 
+Therefore, the group solution contains a memory allocator allowing access to 
+a further 32Kb of memory. This allows a much greater amount of information to be 
+stored on the device. 
+In addition, the look-up table used by the memory allocator was stored in the 
+additional memory, making it a self containing allocator. 
 
 \subsection*{Myself (Douglas Parsons)}
 
