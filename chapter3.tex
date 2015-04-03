@@ -39,31 +39,118 @@ was a great strength of our team. Each person worked on as aspect of the project
 that they found interesting, and throughout the project we had regular feedback 
 on all our work in order to make sure we were meeting our specifications and 
 that nobody was out of their depth. Below I have divided up the work that each 
-individual completed during the duration of the project.
+individual completed during the duration of the project, and why they were 
+working on that aspect of the project. 
 
 \subsection*{Mingzhao Zhao}
+Mingzhao was allowed to choose his own area of the project to work on, however, 
+not being especially confident with the platform he decided to target user 
+interaction with the device via the keypad. As user interaction was a required 
+part of the specification it was a useful area of focus. Following suggestions 
+of other group members he decided to convert the previous keypad polling method 
+used in the mini-projects into an interrupt based system. 
+
+\subsection*{Shivam Mistry} 
+Shivam worked very strongly as a group member. To begin with he took on the 
+challenge of constructing code to read the data from the CAN bus. Following the 
+working CAN bus code, he worked on optimising the CAN bus code through the
+implementation of a queue, as well as decoding the CAN packets to extract their
+data, and the parsing of text packets to extract only the useful information. 
+Furthermore, on realisation of additional device memory, Shivam wrote a memory 
+allocator allowing the additional memory to be used constructively, further 
+optimising the system. 
+
+\subsection*{Myself (Douglas Parsons)}
+
+
+\subsection*{Liam Fraser}
+Liam has a strong background in music technology, taking the subject at A-level,
+and working on personal projects involving music. Furthermore his interest from 
+the beginning of the project in audio processing meant that it was an obvious 
+choice for Liam to look into the generation and playback of music. The 
+specification was exceeded with his contributions, as Liam's interest took him 
+into writing additive synthesis for the project, as well as attack sustain release 
+curves for the audio to produce a more realistic sounding output, and a fixed 
+point maths library in order to replace floating points, hence making his audio 
+code more efficient. 
+
+\section{Technical innovation and implementation of each member}
+\subsection*{Mingzhao Zhao}
 Mingzhao's work was primarily focused on handling the 16 digit keypad on the 
-mbed board, this board was configured to be interrupt based as opponed to  being 
-polled. This caused additinal problems with bounce on the switches, this 
+mbed board, this board was configured to be interrupt based as opposed to  being 
+polled. This caused additional problems with bounce on the switches, this 
 caused multiple interrupts and race conditions to occur within the interrupt 
 handler. Due to the row/column method in which the key pad is scanned, the 
 number of 'bounces' was reduced significantly by only permitting certain 
-input values to register, and then reduced further by only allowing a keypress 
-once every half a second to do anthing. This method of debounce was achieved 
-using a SysTick to act as a timer. 
+input values to register, and then reduced further by only allowing a single key 
+press every half a second. This method of debounce was achieved using a system 
+timer (SysTick) to count the time between successive key presses, and disregard 
+any that occurred too closely together. 
 
 \subsection*{Shivam Mistry}
+Shivam initially targeted the CAN bus, and was able to rapidly achieve a fully 
+functioning prototype. The original solution processed each packet as it was 
+received. As the complexity of songs increased it became obvious that this 
+rudimentary method was not going to be sufficient when many CAN packets were 
+arriving in a short space of time. In order to improve the functionality the 
+packets were instead added to a queue, which was continually processed. This 
+removed the requirement of each packet being processed as it was received, and 
+allowed a more streamlined solution. Shivam's contribution also included the 
+reverse engineering and decoding of the CAN bus packets received. Not only did 
+his solution test the check-sum of each packet to ensure that it had been 
+correctly received, but also later implemented a text parser, allowing the 
+text packets which were sent prior to each song containing useful information 
+to be stripped down to only the required information. 
+
+Furthermore, following an 
+instance where the physical memory (RAM) on the device was fully used up, Shivam 
+discovered that the device contains an additional 32Kb of memory that is 
+typically reserved for communicating to a USB or Ethernet device (in addition 
+to the original 32Kb). However, due to the inaccessible status of this memory, 
+a memory allocator was required for it to be accessed. Therefore, Shivam made a 
+memory allocator that allowed access to this additional memory, effectively 
+allowing us to store a much larger amount of information on the device. In 
+addition, the look-up table that the memory allocator used was stored in the 
+additional memory, and hence had no impact otherwise on the functionality of the 
+device. 
 
 \subsection*{Myself (Douglas Parsons)}
 
+My personal contribution to the project was primarily targeted at the user 
+interactions with the device. While it was initially set out that Mingzhao was 
+going to work on implementing an interrupt based keypad, I decided that the 
+communication via serial would potentially allow a much greater level of 
+debugging, interaction, and setting manipulation for the device. From the 
+beginning of the ten week period, I focused on setting up a shell style interface 
+for the device. This would allow the user to communicate with the mbed board by 
+typing in commands on a computer keyboard, and execute the command by pressing 
+the enter key. This therefore allows a much more powerful system of interaction 
+with the mbed board than the 16 digit keypad could possibly provide. In addition 
+to implementing this additional interfacing method, I focused on customising the 
+code from the mini-projects to allow a greater level of control over the on-board 
+LCD screen. Implementing features such as scrolling text (of custom messages), 
+and separated out writing to each line of the screen. Following the implementation 
+of my interfacing method, I worked alongside Mingzhao on combining his code with 
+the rest of the project, enabling his input to be a part of the team's solution.
+
 \subsection*{Liam Fraser}
+Liam Fraser, following an interest in music technology was eager to work on the 
+audio code for the project. He implemented a simplistic system, allowing musical 
+notes to be generated by scanning, and interpolating over a look up table. He then 
+looked into generating synthesised music, and implemented additional synthesis 
+into the project, allowing multiple notes to be playing simultaneously. However, 
+on testing his synthesis code on the mbed board, it rapidly became apparent that 
+the use of floating point numbers was not sufficiently quick to produce clean 
+sounding audio. Therefore, a fixed point library was implemented, this allowed 
+much quicker calculations to occur compared to those of floating point numbers. 
+Following this optimisation of the synthesis code, the synth code was further 
+optimised through the use of Direct Memory Access (DMA). This allowed the audio 
+output to work independent of the central processing unit (CPU). This 
+therefore speeds up the processing of any audio, as the CPU does not have to be 
+involved for any sound to be output, only for the generation of audio samples 
+[dma-book]. In addition, to create a more realistic sounding output from the 
+device, an attack sustain release state model was incorporated for each note. 
+This gives an initial rise in volume as the note is turned on, and a fading out 
+of the note as it is turned off, producing a volume curve more typical of an 
+actual instrument [asr-book].
 
-\section{Technical innovation and implementation of each member}
-
-\subsection*{Mingzhao Zhao}
-
-\subsection*{Shivam Mistry}
-
-\subsection*{Myself (Douglas Parsons)}
-
-\subsection*{Liam Fraser}
