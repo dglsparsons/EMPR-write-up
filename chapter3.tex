@@ -141,18 +141,32 @@ My personal contribution to the project was primarily targeted at the user
 interactions with the device. While it was initially set out that Mingzhao was 
 going to work on implementing an interrupt based keypad, I decided that the 
 communication via serial would potentially allow a much greater level of 
-debugging, interaction, and setting manipulation for the device. From the 
+debugging, interaction, and manipulation of settings for the device. From the 
 beginning of the ten week period, I focused on setting up a shell style interface 
 for the device. This would allow the user to communicate with the mbed board by 
 typing in commands on a computer keyboard, and execute the command by pressing 
-the enter key. This therefore allows a much more powerful system of interaction 
-with the mbed board than the 16 digit keypad could possibly provide. In addition 
-to implementing this additional interfacing method, I focused on customising the 
-code from the mini-projects to allow a greater level of control over the on-board 
-LCD screen. Implementing features such as scrolling text (of custom messages), 
-and separated out writing to each line of the screen. Following the implementation 
-of my interfacing method, I worked alongside Mingzhao on combining his code with 
-the rest of the project, enabling his input to be a part of the team's solution.
+the enter key. The input from the keyboard was implemented using interrupts in 
+order to avoid unnecessary computation time from continual polling. 
+Furthermore, the processing of text input required a text-parser to be used. 
+Due to an unknown number of words, and an unknown input length, the parser had 
+to be very carefully adjusted to avoid memory overflow situations. Further 
+difficulty was added to the implementation, as alterations had to be made in many 
+different aspects of the group solution. A detailed understanding of each 
+individuals contributions was required to manipulate their functionality, and 
+continual additions and updates were needed throughout the project as changes 
+were made. 
+In addition to implementing the additional interfacing method of a shell style 
+interface, I focused on customisation of the mini-project LCD screen code in 
+order to allow a greater level of control. I implemented features such as the 
+ability to write to each individual line of the LCD display, and the ability to 
+scroll text across the screen. 
+The latter of which was particularly difficult, not only requiring pointer 
+manipulation for efficient text processing, but accessing only the required 
+section of the LCD in order to avoid displaying unwanted characters provided 
+a significant technical challenge. Following the implementation of the shell, and 
+the LCD screen code, 
+I worked alongside Mingzhao on combining his code with 
+the rest of the group solution. 
 
 \subsection*{Liam Fraser}
 Liam Fraser, following an interest in music technology was eager to work on the 
