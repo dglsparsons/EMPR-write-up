@@ -43,17 +43,22 @@ individual completed during the duration of the project, and why they were
 working on that aspect of the project. 
 
 \subsection*{Mingzhao Zhao}
-Mingzhao was allowed to choose his own area of the project to work on, however, 
-not being especially confident with the platform he decided to target user 
-interaction with the device via the keypad. As user interaction was a required 
-part of the specification it was a useful area of focus. Following suggestions 
+Each inidivdual was allowed to choose their own area of the project to work on. 
+Mingzhao was not especially confident with the platform, and therefore he 
+decided to target user interaction with the device via the keypad. This 
+provided a possible method of user input, as well as providing a means to 
+optionally filter data, or control the volume output of the device. 
+Following suggestions 
 of other group members he decided to convert the previous keypad polling method 
-used in the mini-projects into an interrupt based system. 
+incorporated in the mini-projects into an interrupt based system, removing the 
+need for unnecessary CPU cycles to be used polling the device continually. 
 
 \subsection*{Shivam Mistry} 
 Shivam worked very strongly as a group member. To begin with he took on the 
-challenge of constructing code to read the data from the CAN bus. Following the 
-working CAN bus code, he worked on optimising the CAN bus code through the
+challenge of constructing code to read the data from the CAN bus continually, 
+as well as implementing the base for filtering out data according to a preset ID
+. Following the construction of the CAN bus code, he worked on optimising the 
+CAN bus code through the
 implementation of a queue, as well as decoding the CAN packets to extract their
 data, and the parsing of text packets to extract only the useful information. 
 Furthermore, on realisation of additional device memory, Shivam wrote a memory 
@@ -67,19 +72,29 @@ debugging tools, could potentially allow settings to be changed without
 reinstalling binaries on the device, and could be used for a wide range of 
 useful functions, such as changing the volume or displaying song information. 
 From the mini projects it became clear that the 16 digit keypad attached to the 
-mbed would not provide a strong level of user interaction, so instead I focused 
-on allowing a further degree of interaction via the computer keypad.
+mbed would not provide an intuitive user experience. Rather than relying on 
+the keypad as the sole method of user interaction, I instead focused 
+on allowing a further degree of interaction via the computer keypad. This 
+enabled the user to preset an ID to filter out data, adjust the volume of the 
+output, display any data received on the CAN bus, as 
+well as adjust settings within the project without requiring a full reinstall.
+During the implementation of the shell it became clear that this could be a 
+valuable tool for displaying useful information such as the song name, and 
+therefore I additionally worked with the LCD display to enable a much greater 
+degree of control over what was displayed, enabling scrolling text, and writing 
+to each line of the display individually.
 
 \subsection*{Liam Fraser}
 Liam has a strong background in music technology, taking the subject at A-level,
 and working on personal projects involving music. Furthermore his interest from 
 the beginning of the project in audio processing meant that it was an obvious 
 choice for Liam to look into the generation and playback of music. The 
-specification was exceeded with his contributions, as Liam's interest took him 
-into writing additive synthesis for the project, as well as attack sustain release 
-curves for the audio to produce a more realistic sounding output, and a fixed 
-point maths library in order to replace floating points, hence making his audio 
-code more efficient. 
+specification was exceeded with his contributions, not only did his solution 
+generate an audio tone corresponding to the frequency, duration, and volume 
+levels specified in the data stream, but implemented an attack sustain release 
+curve to improve the realism of the output sound, as well as additive synthesis 
+enabling multiple notes to be played simultaneously, and his solution also 
+used DMA and a fixed point library to improve the efficiency of the system. 
 
 \section{Technical innovation and implementation of each member}
 \subsection*{Mingzhao Zhao}
