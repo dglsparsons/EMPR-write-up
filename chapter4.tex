@@ -4,6 +4,52 @@
 % section relating to a professional/social/ethical/environmental aspect of
 % your system solution.
 \section{Description of the Team's Testing Strategy}
+
+Throughout the duration of the project, each section of the project underwent 
+significant reviews, and testing in order to ensure that it was of the highest 
+quality and that it was not laden with any issues causing undesirable behaviour, 
+or significant faults that may have caused the device to crash. Furthermore, once 
+incorporated into the group's main solution, the implemented code underwent a 
+thorough review in order to ensure that the quality of the implemented product 
+was the highest possible, and free from anything that may cause issues in the 
+future. In effect the product underwent many different stages of testing 
+throughout its lifecycle. 
+
+\subsection*{Individual Testing}
+
+Prior to the inclusion within a greater completed solution, each section of the 
+project underwent individual tests. In order to test each section of the project, 
+a debugging library was created. The debugging library was only included in the 
+binaries installed on the device if the make command included included it. This 
+means, for the purposes of testing it was possible to use \texttt{make debug} 
+and have debug messages containing text, or values printed out over serial. 
+However, once sufficient testing was done, no 
+alterations had to be made to the source code to remove these statements, and 
+instead the project could be installed by calling \texttt{make}. 
+This enabled statements to be added to the project, that would print out 
+messages over serial.
+
+\subsection*{Code Review}
+
+Before each contribution was incorporated into the group's solution, it was 
+first checked over by at least two other group members to ensure the quality of 
+the solution was high. These checks often resulted in refactoring code to 
+achieve a more streamlined end product, examples of which could include the 
+simplification of logic for writing text to the LCD display through pointer 
+arithmetic, or simplifying code within an interrupt handler in order to avoid 
+race conditions. 
+
+\subsection*{Integration Testing}
+
+Following the combination of individual components into the group solution, the 
+combined product was then tested thoroughly to ensure no erroneous behaviour 
+could occur. This was primarily done by leaving the boards running for long 
+periods of time within the labs, and listening to make sure nothing unexpected 
+was occuring. In addition, each feature was continually explored in order to 
+make sure everything fully functioned.  
+
 \section{Results of Testing Strategy and How Well This Met the Requirements}
+
+
 \section{Section relating to a professional/social/ethical/environmental
         aspect of our solution} % TODO - Find a proper name for this section
