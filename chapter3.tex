@@ -43,7 +43,7 @@ individual completed during the duration of the project, and why they were
 working on that aspect of the project. 
 
 \subsection*{Mingzhao Zhao}
-Each inidivdual was allowed to choose their own area of the project to work on. 
+Each individual was allowed to choose their own area of the project to work on. 
 Mingzhao was not especially confident with the platform, and therefore he 
 decided to target user interaction with the device via the keypad. This 
 provided a possible method of user input, as well as providing a means to 
@@ -69,7 +69,7 @@ optimising the system.
 Following the mini projects, and from reviewing the specification, it was clear 
 that a strong level of user interaction with the device would provide valuable 
 debugging tools, could potentially allow settings to be changed without 
-reinstalling binaries on the device, and could be used for a wide range of 
+re-installing binaries on the device, and could be used for a wide range of 
 useful functions, such as changing the volume or displaying song information. 
 From the mini projects it became clear that the 16 digit keypad attached to the 
 mbed would not provide an intuitive user experience. Rather than relying on 
@@ -77,7 +77,7 @@ the keypad as the sole method of user interaction, I instead focused
 on allowing a further degree of interaction via the computer keypad. This 
 enabled the user to preset an ID to filter out data, adjust the volume of the 
 output, display any data received on the CAN bus, as 
-well as adjust settings within the project without requiring a full reinstall.
+well as adjust settings within the project without requiring a full reinstate.
 During the implementation of the shell it became clear that this could be a 
 valuable tool for displaying useful information such as the song name, and 
 therefore I additionally worked with the LCD display to enable a much greater 
@@ -100,8 +100,8 @@ used DMA and a fixed point library to improve the efficiency of the system.
 \subsection*{Mingzhao Zhao}
 Mingzhao's work was primarily focused on implementing interaction via 
 the 16 digit keypad on the mbed board. The keypad was set up in the mini-projects 
-to allow user ineraction through continually polling the keypad. However, due 
-to the limited speed of the processer it was decided that a better solution 
+to allow user interaction through continually polling the keypad. However, due 
+to the limited speed of the processor it was decided that a better solution 
 would be to use an interrupt based system.
 However, this caused additional problems with bounce on the switches: 
 multiple interrupts could occur in a very short space of time due to bounces on 
@@ -114,7 +114,7 @@ did not match one of the keys pressed. The switch bounces were then reduced
 further by only allowing a single key press every half a second. 
 This method of debounce was implemented using a system 
 timer (SysTick) to count the time between successive key presses. Any key 
-presses that occured too closely together were disregarded. 
+presses that occurred too closely together were disregarded. 
 
 \subsection*{Shivam Mistry}
 Shivam initially targeted the CAN bus, and was able to rapidly achieve a fully 
@@ -124,7 +124,7 @@ simplistic method was not going to be sufficient when many CAN packets require
 processing in a short space of time.
 In order to improve the functionality, a queue was implemented. Packets were 
 added to the queue on being received, and processed whenever there was sufficient
-processer resources available.
+processor resources available.
 This removed the requirement of each packet being processed as it was received,
  and therefore provided a clean, efficient solution.
 Shivam's contribution also included the reverse engineering and decoding of any
