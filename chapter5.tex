@@ -3,6 +3,7 @@
 % the technical innovation and implementation and details of your testing
 % strategy, and the results. 
 \section{Description of Individual Component Solution}
+
 My individual contribution to the project consisted primarily of a shell style 
 interface for the host board, allowing user interaction via a computer keyboard 
 and monitor, but also consisted of the modification and extension of previously 
@@ -12,6 +13,45 @@ attched LCD display.
 The shell style interface was set up using an interrupt based system from the 
 computer. This enables users to enter commands through any input method for 
 the computer and process them on the device. This method also allows the user
-to display useful information through the computer monitor. 
+to display useful information through the computer monitor.
+
+There were a wide range of possible input commands available through this interface, 
+with many possible options and settings being adjusted on the fly. By typing 'help' and 
+pressing enter, the user could view a list of possible commands, as seen below: 
+
+"List of available commands:\par\bigskip\noindent
+playnote note volume   : plays the selected midi note\par\noindent
+noteoff note           : turns off any playing notes\par\noindent
+volume <vol>           : sets the output volume to 'vol'\par\noindent
+showvol                : displays the current volume\par\noindent
+write "text"           : writes text to the LCD screen\par\noindent
+writeline "text" <linenumber> : writes text to one line of the 
+LCD screen\par\noindent
+listen                 : listens to music on the CAN bus\par\noindent
+stoplisten             : stops listening to music on the CAN bus\par\noindent
+setid <channel>        : Filters out channels that do not match 
+channel number 'channel'. 
+To play all, use "setid all\par\noindent
+showid                 : Shows the id of the current channel\par\noindent
+showtrack              : Shows the current track name on the LCD\par\noindent
+showchan               : Scrolls the channels on the LCD\par\noindent
+showpacket             : Prints CAN packets until a key is pressed\par\noindent
+scroll \"text\" <line> : displays scrolling text on line <line> of the 
+LCD screen\par\noindent
+stopscroll <line>      : stops scrolling text on the screen. To stop both lines, 
+enter <line> as 2 or all.\par\noindent
+scrollenable <line>    : enables scrolling text on the screen.\par\noindent
+shownotes              : displays all notes currently being played\par\noindent
+cowsay \"text\"        : displays an ASCII cow, saying text\par\noindent
+clear <line>           : clears any text that is on the lcd line <line> 
+Note - you may also have to call stopscroll to fully clear\par\noindent
+\par\bigskip\noindent
+This therefore provides the user with a high amount of control over the devices 
+output though both audio and visual elements, as well as a high level of control 
+over the devices functionality. Furthermore, the interaction with 
+the on board LCD display can be clearly seen through the above commands, hence 
+explicating the necessity for the alterations made to LCD display code to permit 
+a greater degree of control, and enable features such as scrolling text, and 
+writing to only part of the LCD screen. 
 \section{Discussion of Technical Innovation and Implementation}
 \section{Testing Strategy, and the Results}
