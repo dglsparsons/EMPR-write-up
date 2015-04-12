@@ -88,7 +88,26 @@ Following the disection of the user's input into components, a string comparison
 was used to determine what the user's input was, enabling the corresponding desired 
 behaviour to be executed. In order to prevent race conditions from occuring within in the 
 interrupt handler, all text processing following the enter key being pressed occurs 
-outside of the interrupt handler using a flag based system. 
+outside of the interrupt handler using a flag based system.
+\par\bigskip\noindent
+In order to successfully perform the desired functionality, settings are altered within many 
+different areas of the project. The implementation of the shell therefore required a 
+fully detailed understanding of how each individual component of the project functions
+in order to manipulate and alter existing code. Modifications were made throughout 
+the project, and included; the addition of a settable id within the CAN bus code, 
+the addition of a filter in the CAN bus to ignore unwanted data 
+according to the preset id, the addition of a volume control in the synth code, and a major 
+overhaul of existing LCD code to allow a much greater degree of control over the display. 
+\par\bigskip\noindent
+The overhaul of the LCD display code provided a significant technical challenge. The initial 
+desire was simply to allow scrolling text on the display, however it soon became clear that 
+further alterations were required. Initially the LCD code would write to the LCD display, and 
+clear it. To match what I wished to achieve, it was necessary to first figure out how to write 
+only to a single line of the LCD display, without clearing the other line. This required 
+accessing only certain memory adresses of the LCD display buffer in order to prevent clearing 
+parts of the display. Following the successful implementation of the capability to write to 
+each individual line of the LCD display, the next target was to give the ability to scroll 
+text across the display, in order to effectively increase the number of characters that could be read. 
 
 
 \section{Testing Strategy, and the Results}
