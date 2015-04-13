@@ -21,32 +21,41 @@ By typing 'help' and pressing enter, the user could view a list of possible
 commands, as seen below: 
 
 % TODO - PUT THIS INTO A TABLE LOL 
-"List of available commands:\par\bigskip\noindent
-playnote note volume   : plays the selected midi note\par\noindent
-noteoff note           : turns off any playing notes\par\noindent
-volume <vol>           : sets the output volume to 'vol'\par\noindent
-showvol                : displays the current volume\par\noindent
-write "text"           : writes text to the LCD screen\par\noindent
-writeline "text" <linenumber> : writes text to one line of the 
-LCD screen\par\noindent
-listen                 : listens to music on the CAN bus\par\noindent
-stoplisten             : stops listening to music on the CAN bus\par\noindent
-setid <channel>        : Filters out channels that do not match 
-channel number 'channel'. 
-To play all, use "setid all\par\noindent
-showid                 : Shows the id of the current channel\par\noindent
-showtrack              : Shows the current track name on the LCD\par\noindent
-showchan               : Scrolls the channels on the LCD\par\noindent
-showpacket             : Prints CAN packets until a key is pressed\par\noindent
-scroll \"text\" <line> : displays scrolling text on line <line> of the 
-LCD screen\par\noindent
-stopscroll <line>      : stops scrolling text on the screen. To stop both lines, 
-enter <line> as 2 or all.\par\noindent
-scrollenable <line>    : enables scrolling text on the screen.\par\noindent
-shownotes              : displays all notes currently being played\par\noindent
-cowsay \"text\"        : displays an ASCII cow, saying text\par\noindent
-clear <line>           : clears any text that is on the lcd line <line> 
-Note - you may also have to call stopscroll to fully clear\par\noindent
+\begin{table}[h]
+\begin{tabular}{lp{8cm}}
+List of available commands:\par\bigskip\noindent & \\
+playnote note volume   & : plays the selected midi note\\
+noteoff note           & : turns off any playing notes\\
+volume vol           & : sets the output volume to 'vol'\\
+showvol                & : displays the current volume\\
+write text           & : writes text to the LCD screen\\
+writeline text linenumber & : writes text to one line of the 
+LCD screen\\ 
+listen                 & : listens to music on the CAN bus\\
+stoplisten             & : stops listening to music on the CAN bus\\
+setid channel        & : Filters out channels that do not match 
+channel number channel. To play all, use setid all\\
+showid                 & : Shows the id of the current channel\\
+showtrack              & : Shows the current track name on the LCD\\
+showchan               & : Scrolls the channels on the LCD\\
+\end{tabular}
+\end{table}
+% 2 tables because there's a page break in between
+\begin{table}[h]
+\begin{tabular}{lp{10cm}}
+showpacket             & : Prints CAN packets until a key is pressed\\
+scroll text line & : displays scrolling text on line line of the 
+LCD screen\\
+stopscroll line      & : stops scrolling text on the screen. To stop both lines, 
+enter line as 2 or all.\\
+scrollenable line    & : enables scrolling text on the screen.\\
+shownotes              & : displays all notes currently being played\\
+cowsay text        & : displays an ASCII cow, saying text\\
+clear line           & : clears any text that is on the lcd line line 
+Note - you may also have to call stopscroll to fully clear\\
+\end{tabular}
+\end{table}
+
 \par\bigskip\noindent
 This therefore provides the user with a high amount of control over the devices 
 output though both audio and visual elements, as well as a high level of control 
