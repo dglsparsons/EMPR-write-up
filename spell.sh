@@ -12,3 +12,5 @@ ispell -t chapter3.tex
 ispell -t chapter4.tex
 ispell -t chapter5.tex
 ispell -t chapter6.tex
+
+rm *.bak
