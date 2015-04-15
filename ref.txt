@@ -1,6 +1,0 @@
-[how-mbed-works] http://developer.mbed.org/handbook/How-mbed-works
-[pete-page] http://www-module.cs.york.ac.uk/empr/mbed_resources/
-[dma-book] https://books.google.co.uk/books?id=s2KPvKCQm7sC&pg=PA31
-[asr-book] https://books.google.co.uk/books?id=oaYgBQAAQBAJ&pg=PA286
-[disabled-book] https://books.google.co.uk/books?id=3H3NBQAAQBAJ&pg=PA278
-[disabled-book2] https://books.google.co.uk/books?id=HJW5BQAAQBAJ&pg=PA634
