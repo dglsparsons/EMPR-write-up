@@ -3,6 +3,7 @@
 \documentclass[a4paper, 11pt]{report}
 \usepackage[utf8]{inputenc}
 \usepackage[pdftex]{graphicx}
+%\usepackage[nottoc,numbib]{tocbibind}
 \usepackage[margin=1.2in]{geometry}
 \newcommand{\HRule}{\rule{\linewidth}{0.5mm}}
 \usepackage{fancyhdr}
@@ -57,6 +58,9 @@ Component}
 \chapter{Summary and Conclusions}
 \input{chapter6.tex}
 \appendix
+\addcontentsline{toc}{chapter}{References}
+\bibliographystyle{IEEEtran}
+\bibliography{ref}
 \chapter{Specified Documents}
 \input{appendix}
 \end{document}
