@@ -3,10 +3,12 @@
 % expanded into a discussion and highlighting likely implied technical aspects
 % and challenges that need/needed to be tackled
 \section{Description of Problem and Requirements}
+
 The Embedded Systems Project consisted of two main sections: a group solution 
-to a predetermined problem, and an individual extension to the group's work, 
-left up to each person to determine. Both sections of the project involved 
-embedded systems software development in the C programming language. 
+that was required to meet a set specification, and an individual extension to 
+the group's solution that was left up to each person to determine. 
+Both sections of the project involved embedded systems software development in 
+the C programming language. 
 \par\bigskip\noindent
 The target platform of the development is an ARM-based microcontroller, 
 situated on a board of peripheral accessories. The microcontroller consists of 
@@ -24,7 +26,6 @@ individual extensions. The accessories on the board include: a 16 key keyboard,
 a 16 by 2 line LCD, four seven segment displays, a micro SD slot, a USB host 
 connection, CAN bus connecter, audio in and out jacks, a TCP/IP connection, as 
 well as off board connections to users hardware. 
-
 \par\bigskip\noindent
 The group task consisted of multiple different challenges, with the concept
 that the MBED board would continually receive CAN packets, filter out those 
@@ -32,7 +33,6 @@ that do not match a user selectable id, decode the CAN packets, and play notes
 corresponding to the frequency, volume, and duration that were specified from 
 the CAN transmissions. In addition the user must be able to view useful 
 information, select the channel id, and adjust the volume. 
-
 \par\bigskip\noindent
 In addition there was an individual component. This did not have to match any 
 specification, and was instead left up to each person to decide on their own 
@@ -41,7 +41,6 @@ Linux shell style user interface. This allows user to interact with the device
 by typing commands into a terminal on their computer, effectively adding an 
 additional element of user control that is more intuitive and responsive than 
 using the 16 digit keypad from the MBED board.
-
 \par\bigskip\noindent
 For our group solution, the specification was broken down into three separate 
 areas, allowing us to focus our expertise and interests on what suited us best.
