@@ -4,8 +4,66 @@
 % implementation of the work.
 \section{Description of the Team Solution}
 
+The team solution following the completion of the project was a successful 
+working product. Every point on the specification was fully met, and the solution 
+incorporated additional features such as a user friendly shell style input, or 
+the ability to synthesise multiple channels of music. This chapter sets out a 
+full technical description of each different aspect of the finished product, 
+explaining in detail how each feature is implemented. 
+
+\subsection*{Controller Area Network Bus Processing}
+
+The first technical challenge faced in the implementation of the group's solution
+was the receival of data from the controller area network bus (CAN bus). The 
+implemented solution uses an advanced system to ensure that no transmissions of 
+data packets are missed. 
+Each time data is transmitted on the CAN bus the MBED board receives an interrput. 
+The interrupt service routine copies the data transmitted on the CAN bus into 
+the devices memory, ready for processing at a later stage. 
+By avoiding the processing of any data in the interrupt handler, it is ensured 
+that no race conditions can occur, and therefore data transmissions cannot be 
+missed. 
+The data packets are stored in memory as a queue. 
+This enables a first-in-first-out approach to processing of the data to occur. 
+The CAN data packets are decoded according to the given specification. 
+There are two possible types of packets received: A basic data packet containing 
+information for the frequency, volume, channel and control data of a note, or, 
+a text packet, containing information for a track name, beats per minute of the 
+track, and channel numbers and names \cite{data-packet}.
+If the packet received is a data packet, it interacts directly with the audio 
+code, turning on, off, or adjusting notes corresponding to the information 
+contained. 
+Alternatively, if the packet is a text packet, it requires further processing to 
+extract the information contained. 
+Text packets may arrive in multiple packets due to the length of text contained. 
+Following the receival of text packets, a checksum is sent. 
+If the length of the text does not match the checksum, the text is ignored. 
+Hence, this ensures all packets were successfully received, and that none have 
+been corrupted. 
+If the checksum value is correct, and the text packets have been correctly 
+received, they are parsed in order to extract their content into a more usable 
+format. 
+This is achieved through a state based text-parser, that draws inspiration from 
+a stack-overflow post \cite{text-parser}. 
+The text parser iterates through the text, alternating state depending on whether 
+it is located inside a word, inside quotation marks or inside white-space. 
+This breaks the text into smaller sections, and removes quotation marks, 
+enabling it to be presented in a useful format, such as displaying the track 
+name on screen. 
+
+
+\subsection*{Shell User Interface}
+
+\subsection*{Keypad and LCD interaction}
+
+\subsection*{Audio Processing}
+
+
+
+
+
 The end product of our team solution was a successful working product. Through the 
-incorporation of a Linux style shell into the group solution, we managed to produce 
+incorporation of a shell interface into the group solution, we managed to produce 
 a highly configurable single solution that managed to satisfy each section of 
 specification. In addition the group solution contained two custom built speakers, 
 capable of being powered by the 5V voltage rails from the peripherals board. 
