@@ -6,8 +6,9 @@
 \section{Description of the Team's Testing Strategy}
 
 Throughout the duration of the project, each section of the project underwent 
-significant reviews, and testing in order to ensure that it was of the highest 
-quality and that it was not laden with any issues causing undesirable behaviour, 
+significant reviews and testing in order to ensure that it was of the highest 
+quality.
+and that it was not laden with any issues causing undesirable behaviour, 
 or significant faults that may have caused the device to crash. Furthermore, once 
 incorporated into the group's main solution, the implemented code underwent a 
 thorough review in order to ensure that the quality of the implemented product 
@@ -17,17 +18,25 @@ throughout its life-cycle.
 
 \subsection*{Individual Testing}
 
-Prior to the inclusion within a greater completed solution, each section of the 
-project underwent individual tests. In order to test each section of the project, 
-a debugging library was created. The debugging library was only included in the 
-binaries installed on the device if the make command included included it. This 
+As our team used the version control system, git, we were able to produce new 
+branches of the project for each new feature. 
+This not only enabled each new features to be tested separately, but enabled 
+different group members to work on alterate features simultaneously, with no 
+possibility of interference. 
+After the completion of a new feature, prior to the inclusion within the group 
+solution, each section of the feature underwent individual tests. 
+For a greater ease in testing the project,  a debugging library was created, 
+enabling serial messages to print diagnostics. 
+The debugging library was only included in the 
+binaries installed on the device if the make command included it. This 
 means, for the purposes of testing it was possible to use \texttt{make debug} 
-and have debug messages containing text, or values printed out over serial. 
+and have messages containing text, or values printed out over serial. 
 However, once sufficient testing was done, no 
-alterations had to be made to the source code to remove these statements, and 
+alterations had to be made to the code to remove these statements, and 
 instead the project could be installed by calling \texttt{make}. 
-This enabled statements to be added to the project, that would print out 
-messages over serial.
+This therefore provided a simplistic tool, effectively creating two distinct 
+modes of operation: a debugging mode, where information was output over serial, 
+and a production mode, where normal operation ensued. 
 
 \subsection*{Code Review}
 
