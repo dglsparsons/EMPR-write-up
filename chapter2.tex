@@ -38,22 +38,50 @@ that the MBED board would continually receive CAN packets, filter out those
 that do not match a user selectable id, decode the CAN packets, and play notes 
 corresponding to the frequency, volume, and duration that were specified from 
 the CAN transmissions. In addition the user must be able to view useful 
-information, select the channel id, and adjust the volume. 
+information, select the channel id, and adjust the volume. The full requirements
+for the group solution are as follows \cite{specification}:
 \par\bigskip\noindent
-In addition there was an individual component. This did not have to match any 
-specification, and was instead left up to each person to decide on their own 
-extension to the group project. For my individual extension, I implemented a 
-Linux shell style user interface. This allows user to interact with the device 
-by typing commands into a terminal on their computer, effectively adding an 
-additional element of user control that is more intuitive and responsive than 
-using the 16 digit keypad from the MBED board.
+\textbf{S.1. A solution using MBED for live monitoring of CAN bus data packets.}
+\hangindent=0.7cm
+Ideally this should include the ability to show all data and also 
+to show data filtered according to a configurable instrument channel ID.
+\par\bigskip\noindent
+\textbf{S.2 An MBED solution which has the following specifications :-}
+\begin{itemize}
+        \item Receives CAN bus data continuously
+        \item Has the ability to preset a local 'ID”
+        \item Can optionally filter the data according to it matching the preset ID
+        \item For each data element, will generate an audio tone corresponding to frequencies,
+            durations, and volume levels if specified in the data stream
+        \item Has a visual display on the MBED host board indicating useful information
+        \item Has the ability to receive user input via keypad, or an alternative
+        \item Has a volume control function
+\end{itemize}
+\noindent
+In addition to the group solution, each individual was required to extend their 
+groups implementation.  
+This extension did not have to match any set specification, and was instead left 
+up to each individual to decide.
+For my individual extension, I implemented a shell style user interface. 
+This allows user to interact with the device by typing commands into a terminal 
+on their computer, effectively adding an additional element of user control that 
+is both more intuitive and more responsive than using the 16 digit keypad, from 
+the MBED peripherals board.
 \par\bigskip\noindent
 For our group solution, the specification was broken down into three separate 
-areas, allowing us to focus our expertise and interests on what suited us best.
-The breakdown of the three sections was as follows: The receiving and 
-decoding of CAN packets (CAN bus), generation of audio samples corresponding to 
-frequency, duration and volume (Audio), and the ability for the user to 
-interact with the device in order to adjust settings (User Interface). 
+areas. This allowed us to focus our expertise and interests on the aspect best 
+suited to each group member.
+The breakdown of the three sections was as follows: 
+\begin{itemize}
+    \item 
+        The receiving and decoding of CAN packets (CAN bus) 
+    \item 
+        Generation of audio samples corresponding to frequency, duration and 
+        volume (Audio)
+    \item 
+        User interaction with the device in order to display information 
+        and adjust settings.
+\end{itemize}
 
 \section{Discussion of Technical Aspects and Challenges}
 
