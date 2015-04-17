@@ -44,7 +44,7 @@ bus (CAN bus).
 A CAN bus is a type of network, commonly used for rapid 
 communication between embedded systems in situations such as aeroplanes and cars.
 It could be simply stated as "a network technology that provides fast 
-communication among microcontrollers up to real-time requirements" 
+communication among micro-controllers up to real-time requirements" 
 \cite{voss2005comprehensible}. 
 Following the successful retrieval of CAN packets 
 from the network bus, the group solution must decode any packets received, 
@@ -110,13 +110,13 @@ The breakdown of the three sections was as follows:
 
 \section{Discussion of Technical Aspects and Challenges}
 
-My group deconstruced the specification into three major areas requiring 
+My group deconstructed the specification into three major areas requiring 
 technical innovation. 
 These three main areas, as seen in the previous section, 
 equally correspond to the main technical aspects and challenges faced in 
 meeting the specification for the group project. 
 \par\bigskip\noindent
-The first of these challenging areas regarded the receival of data from the CAN 
+The first of these challenging areas regarded the retrieval of data from the CAN 
 bus, and the decoding of any packets received to extract their content. 
 Data transmitted on the CAN bus does not necessarily arrive at regular intervals, 
 and it is impossible to determine when packets may arrive.
@@ -130,7 +130,7 @@ time.
 Furthermore, the extraction of data from any received packets presents an 
 additional technical challenge. 
 Received packets may be of a variety of different lengths and types, so a robust 
-system must be implemented in order to retreive their data. 
+system must be implemented in order to retrieve their data. 
 \par\bigskip\noindent
 The second technical challenge of the project is the generation of audio tones 
 corresponding to frequency, duration and volume levels as specified by the CAN 
@@ -139,9 +139,9 @@ No information is known about the audio output  apart from the frequency,
 duration and volume of each note. 
 The implementation of an audible output therefore requires the generation and 
 manipulation of a wave. 
-The most logical solution to generating a wave would be the use of a wave lookup 
+The most logical solution to generating a wave would be the use of a wave look-up 
 table, giving values for a range of different values. 
-However, this presents additional challenges of storing the wavetable in memory 
+However, this presents additional challenges of storing the wave-table in memory 
 on the device, and interpolating between values accurately and rapidly. 
 Further areas of technical challenge arise in the production of a more authentic 
 sounding product. 
@@ -164,7 +164,7 @@ and view useful information on the MBED board.
 There are many different methods of interaction with the device, the most 
 notable being communication via serial from a desktop computer, or interaction 
 through the peripheral accessories provided, such as the 16 digit keypad. 
-The user's interaction is not predictable or consistant, and similar to the CAN 
+The user's interaction is not predictable or consistent, and similar to the CAN 
 bus data, a large amount of data may be transferred in a short period of time. 
 Further challenges are faced as any user interaction with the device requires 
 parsing, and executing the required user interaction without having any 
