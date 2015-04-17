@@ -144,8 +144,9 @@ an audio sample into a list of values. This enables the possibility for alternat
 waves tables such as a piano sample to be incorporated into the solution, in 
 addition to the more typical sine waves. This list of values was then stored in 
 the flash memory on the device.
-For each note, the wave-table is looped over and the value at each moment in 
-time corresponds to the output voltage. 
+For each note, the wave-table is stepped over, and interpolated to provide readings 
+between different values. 
+The value at each moment in time then determines the output voltage. 
 Only one wave table is used for the audio playback, different frequency notes are 
 played back by adjusting the rate at which the wavetable is looped over. This is 
 achieved my manipulating the step-size: stepping through the wavetable at a 
@@ -155,7 +156,26 @@ frequency of the note by the frequency of the wavetable. This method for the
 generation of notes is known as an oscillator \cite{puckette2007theory}.
 \par\bigskip\noindent
 In order to allow playback of more than one note at any one time, a method of 
-audio synthesis, known as Additive Synthesis was implemented. 
+audio synthesis, known as Additive Synthesis was implemented. This is a simplistic
+method of representing multiple notes, and involves adding together their 
+waveforms to create a composite wave \cite{miranda2012computer}. In the 
+implemented solution, it is not possible to combine the wave tables together, 
+and instead the values generated for each sample are instead added together. 
+In order to create an output with consistant volume, the end value is also 
+divided by the total number of notes that are playing at that moment in time. 
+\par\bigskip\noindent
+In order to enable each individual note to have a volume level, the 
+value read from the wave-table is multiplied by a number between 0 and 1 
+corresponding to the volume level of the note. 
+However, the human ear does not perceive all frequencies equally, and further 
+modification to the volume of each note has to be made in order to compensate 
+for this. Equal volume loudness curves for different frequencies are described 
+by the ISO 223:2003 standard. %TODO -- FIND A CITATION FOR THIS SPEC. 
+Data points from this curve are stored in the devices flash memory, and 
+interpolated to provide an accurate correction value for each frequency. This is 
+applied to each individual note to produce a consistant sounding output. 
+\par\bigskip\noindent
+
 
 
 \section{How the problem was broken down for individual members}
