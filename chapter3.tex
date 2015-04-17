@@ -128,11 +128,17 @@ section of the displays memory prior to updating the display.
 Furthermore the LCD display was further extended, adding the capability for 
 scrolling text. 
 This was implemented using pointer manipulation to incrementally iterate through 
-a text string, periodically updating the display with a new string using SysTick.  
+a text string, and periodically update the display with this string using 
+a system timer (SysTick).  
 
 \subsection*{Audio Processing}
 
-
+The audio processing aspect of the group solution was very thorough, and 
+incorporated a vast array of different features to produce a high quality of 
+sound from the end product.
+\par\bigskip\noindent
+No information is known about the audio output, and wave-forms must be generated 
+from first principles. This is implemented using a look-up table, 
 
 \section{How the problem was broken down for individual members}
 
@@ -239,7 +245,7 @@ could not have any impact on the system. Furthermore, the text packets sent prio
 to each song being played required parsing in order to extract any useful 
 information. Therefore, a text parser, extracting the useful information from 
 these packets to the device was implemented using a state based solution. 
-
+\par\bigskip\noindent
 Furthermore, following an 
 instance where the physical memory (RAM) on the device was fully used up, Shivam 
 discovered that the device contains an additional 32Kb of memory, 
