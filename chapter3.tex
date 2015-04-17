@@ -196,7 +196,16 @@ Instead, a fixed point library was created. This uses the first 18 bits of a
 32 bit number as the integer value, and the last 14 bits as the decimal value, 
 allowing accurate calculations to be performed rapidly. 
 The implementation of a fixed point arithmetic library therefore provides a 
-significant improvement in the capabilities of the system.  
+significant improvement in the capabilities of the system. 
+\par\bigskip\noindent
+Finally, once the audio output is generated, it is output to the Digital to 
+Analogue Converter (DAC). This occurs through the use of Direct Memory Access (DMA).
+This removes the requirement to process any information: the DAC is given 
+direct access to the memory locations needed for outputting audio sound, and as 
+a result, there is a significant increase in performance 
+\cite{barr1999programming}. From the DAC, an analogue signal is output. This is 
+then connected to a speaker for audio playback. 
+In our group solution, %TODO -- write about the speaker and circuit we used
 
 \section{How the problem was broken down for individual members}
 
