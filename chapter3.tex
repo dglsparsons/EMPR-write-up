@@ -140,9 +140,23 @@ from the end product.
 No information is known about the audio output, and wave-forms must be generated 
 from first principles. This is implemented using a look-up table. 
 In order to store a lookup table on the device, a tool was created to convert 
-an audio sample into a list of values, this enabled sound waves for devices such 
-as a piano, or a sine wave to be easily converted into a useable format. 
-This list of values was then stored in the flash memory on the device.
+an audio sample into a list of values. This enables the possibility for alternate 
+waves tables such as a piano sample to be incorporated into the solution, in 
+addition to the more typical sine waves. This list of values was then stored in 
+the flash memory on the device.
+For each note, the wave-table is looped over and the value at each moment in 
+time corresponds to the output voltage. 
+Only one wave table is used for the audio playback, different frequency notes are 
+played back by adjusting the rate at which the wavetable is looped over. This is 
+achieved my manipulating the step-size: stepping through the wavetable at a 
+faster rate corresponds to playback of a higher frequency note. The step-size 
+for each note is determined as each note is turned on by simply dividing the 
+frequency of the note by the frequency of the wavetable. This method for the 
+generation of notes is known as an oscillator \cite{puckette2007theory}.
+\par\bigskip\noindent
+In order to allow playback of more than one note at any one time, a method of 
+audio synthesis, known as Additive Synthesis was implemented. 
+
 
 \section{How the problem was broken down for individual members}
 
