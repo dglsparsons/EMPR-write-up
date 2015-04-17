@@ -39,8 +39,9 @@ extract the information contained.
 \par\bigskip\noindent
 Text packets may arrive in multiple packets due to the length of text contained. 
 Following the arrival of text packets, a check-sum is sent. 
-If the length of the text does not match the check-sum, the text is ignored. 
-Hence, this ensures all packets were successfully received, and that none have 
+If the length of the text received does not match the value of the check-sum, 
+the text is ignored. 
+This ensures all packets were successfully received, and that no packets have 
 been corrupted. 
 If the check-sum value is correct, and the text packets have been correctly 
 received, they are parsed in order to extract their content into a more usable 
@@ -48,54 +49,95 @@ format.
 This is achieved through a state based text-parser, that draws inspiration from 
 a stack-overflow post \cite{text-parser}. 
 The text parser iterates through the text, alternating state depending on whether 
-it is located inside a word, inside quotation marks or inside white-space. 
-This breaks the text into smaller sections, and removes quotation marks, 
+the current location is within a word, inside quotation marks or inside 
+white-space. 
+This breaks the text into smaller sections and removes quotation marks, 
 enabling it to be presented in a useful format, such as displaying the track 
-name on screen. 
-
+name on the LCD display, or on the computer screen. 
 
 \subsection*{Shell User Interface}
 
+To provide a user friendly and simplistic user interface, enabling a high level 
+of control and interaction with the device, a shell style user interface was 
+created. 
+Typically used for interaction with a computer, a shell is a device that takes 
+a user input, and converts their input (command) into the desired functionality. 
+Simply put, a shell is "a program that takes your commands from the keyboard and 
+gives them to the operating system to perform" \cite{shell-def}.
+For the MBED system, communication with the device occurs via serial, with a 
+computer running GNU screen (terminal) used for both input, and feedback from 
+the device. 
+This enables the user to enter commands via the computer keyboard, or other input
+method, and the MBED device to then execute these commands. 
+\par\bigskip\noindent
+When a character is entered into the computer terminal, an interrupt is generated
+on the host MBED board. 
+The interrupt handler first determines whether the user's input is a special case 
+character (BACKSPACE, or ENTER), or a regular character. 
+If the input is a regular character, it is stored in memory for processing at a 
+later stage, as well as being transmitted over serial to be displayed on the 
+computer screen. 
+If the input character is BACKSPACE the last character is removed from the 
+stored input, and a special character sequence is sent to the computer in order 
+to delete the displayed characters from the screen. This only occurs if the 
+user has an input to delete 
+Finally, if the user inputs the ENTER key, a flag is toggled on, indicating that 
+the user's input requires processing. Processing of the user's input is not done 
+in the interrupt handler in order to avoid unpredictable behaviour through race 
+conditions.  
+\par\bigskip\noindent
+Processing of the user's input occurs in three different stages. 
+First the input is parsed, where it is split up into separate words. This 
+simplifies the logic needed to determine the correct functionality to perform.
+Parsing is done using a similar method as the CAN bus text packets \cite{text-parser}, 
+however, modifications have been made to set a limit on the word count of the 
+user's input. This prevents the situation where an input consisting of a large 
+number of separate words results in excessive memory consumption, causing the 
+device to crash. 
+Following the parsing of text, the user's input is matched to possible input 
+commands using strcmp for string comparisons. This determines the correct 
+functionality of the user's input. 
+Once the correct functionality has been determined, the user's command is executed. 
+Depending on what this command is, interaction may involve alterations being made 
+to variables, states of the system, or may interface with the audio, or CAN bus 
+segments of the group solution. 
+
 \subsection*{Keypad and LCD interaction}
+
+The keypad and the LCD additionally provide useful tools for interaction with 
+the device. The specification states that the user must be able to display 
+useful information on the host board, explicating the need to incorporate the 
+LCD display into the solution \cite{specification}. 
+The keypad was configured to work on an interrupt based system, as opposed to 
+a poll-based system. This generated an interrupt each time a key was pressed. 
+The interrupt handler first determined whether the user input was a valid key, 
+filtering out any undesired interrupts generated from the row and column 
+scanning of the keypad. 
+Furthermore, a debounce system was generated, only allowing one successful 
+interrupt to occur once every half a second. This was incorporated using SysTick
+to determine the difference in time between inputs. 
+Following a successful input, the correct functionality was then determined and 
+executed, 
+\par\bigskip\noindent
+The LCD display was heavily utilised by the group solution, and had a wealth of 
+features. 
+The LCD code enabled writing to only a section of the display, allowing different 
+information to be dislayed on each line. 
+This was achieved by manipulation of the device drivers, writing to only a 
+section of the diplays memory prior to updating the display. 
+Furthermore the LCD display was further extended, adding the capability for 
+scrolling text. 
+This was implemented using pointer manipulation to incrementally iterate through 
+a text string, periodically updating the display with a new string using SysTick.  
 
 \subsection*{Audio Processing}
 
 
 
-
-
-The end product of our team solution was a successful working product. Through the 
-incorporation of a shell interface into the group solution, we managed to produce 
-a highly configurable single solution that managed to satisfy each section of 
-specification. In addition the group solution contained two custom built speakers, 
-capable of being powered by the 5V voltage rails from the peripherals board. 
-The solution had a strong user interface, allowing the user to type in commands 
-through the computer keyboard to adjust settings and select modes, set an id 
-to filter channels out, and display information, or custom text on the MBED 
-board. In addition it was also possible to adjust volume, channel and display 
-information on the MBED board using the 16 digit keypad. This high level of 
-user interfacing allowed settings to be flexibly turned on and off, and 
-avoided the need to be continually re-installing binaries to the device. 
-By typing in the command "listen", the MBED would then initialise the CAN bus 
-and begin receiving packets. These could be printed out to the screen by issuing
-a further command, or they could be used to generate audio tones. It is also 
-possible to filter out data according to a preset id by issuing a command, or 
-using the keypad. For each data element received, audio tones can be generated. 
-The solution supports a full synthesis, allowing multiple notes to be played
-on each channel, and multiple channels to play notes simultaneously. In addition 
-the audio output also implemented an 'attack-sustain-release' model, creating a 
-more realistic sounding solution. The audio code used direct memory access (DMA)
-to provide a reduced processing cost in outputting the audio samples.
-The user could also choose to display useful information such as the current 
-song name, the volume, or the channel names on the computer screen or on the 
-MBED board in a variety of ways. For example they could be statically printed on
-the MBED board, or scrolled across the LCD display, or even printed out to 
-the terminal on the computer.
-
 \section{How the problem was broken down for individual members}
 
 The breakdown of our solution into components individual members could work on 
-was a great strength of our team. Each person worked on as aspect of the project 
+was a great strength of our team. Each person worked on an aspect of the project 
 that they found interesting, and throughout the project we had regular feedback 
 on all our work in order to make sure we were meeting our specifications and 
 that nobody was out of their depth. Below I have divided up the work that each 
