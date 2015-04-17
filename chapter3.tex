@@ -138,7 +138,11 @@ incorporated a vast array of different features to produce a high quality of
 sound from the end product.
 \par\bigskip\noindent
 No information is known about the audio output, and wave-forms must be generated 
-from first principles. This is implemented using a look-up table, 
+from first principles. This is implemented using a look-up table. 
+In order to store a lookup table on the device, a tool was created to convert 
+an audio sample into a list of values, this enabled sound waves for devices such 
+as a piano, or a sine wave to be easily converted into a useable format. 
+This list of values was then stored in the flash memory on the device.
 
 \section{How the problem was broken down for individual members}
 
