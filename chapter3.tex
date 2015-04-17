@@ -139,7 +139,7 @@ from the end product.
 \par\bigskip\noindent
 No information is known about the audio output, and wave-forms must be generated 
 from first principles. This is implemented using a look-up table. 
-In order to store a lookup table on the device, a tool was created to convert 
+In order to store a look-up table on the device, a tool was created to convert 
 an audio sample into a list of values. This enables the possibility for alternate 
 waves tables such as a piano sample to be incorporated into the solution, in 
 addition to the more typical sine waves. This list of values was then stored in 
@@ -148,20 +148,20 @@ For each note, the wave-table is stepped over, and interpolated to provide readi
 between different values. 
 The value at each moment in time then determines the output voltage. 
 Only one wave table is used for the audio playback, different frequency notes are 
-played back by adjusting the rate at which the wavetable is looped over. This is 
-achieved my manipulating the step-size: stepping through the wavetable at a 
+played back by adjusting the rate at which the wave-table is looped over. This is 
+achieved my manipulating the step-size: stepping through the wave-table at a 
 faster rate corresponds to playback of a higher frequency note. The step-size 
 for each note is determined as each note is turned on by simply dividing the 
-frequency of the note by the frequency of the wavetable. This method for the 
+frequency of the note by the frequency of the wave-table. This method for the 
 generation of notes is known as an oscillator \cite{puckette2007theory}.
 \par\bigskip\noindent
 In order to allow playback of more than one note at any one time, a method of 
 audio synthesis, known as Additive Synthesis was implemented. This is a simplistic
 method of representing multiple notes, and involves adding together their 
-waveforms to create a composite wave \cite{miranda2012computer}. In the 
+waveform to create a composite wave \cite{miranda2012computer}. In the 
 implemented solution, it is not possible to combine the wave tables together, 
 and instead the values generated for each sample are instead added together. 
-In order to create an output with consistant volume, the end value is also 
+In order to create an output with consistent volume, the end value is also 
 divided by the total number of notes that are playing at that moment in time. 
 \par\bigskip\noindent
 In order to enable each individual note to have a volume level, the 
@@ -173,10 +173,29 @@ for this. Equal volume loudness curves for different frequencies are described
 by the ISO 223:2003 standard. %TODO -- FIND A CITATION FOR THIS SPEC. 
 Data points from this curve are stored in the devices flash memory, and 
 interpolated to provide an accurate correction value for each frequency. This is 
-applied to each individual note to produce a consistant sounding output. 
+applied to each individual note to produce a consistent sounding output. 
 \par\bigskip\noindent
-
-
+To further the accuracy of the output audio sample, an attack-decay-sustain-release 
+model is implemented for each note. This simulates the effect of a musical 
+instrument's variation in volume and sound over time by incorporating a state 
+based system. As the note is initially turned on it infers the attack phase. 
+In the attack phase the volume rises from 0 to the 100 (maximum volume) over a 
+short duration of time.
+Following the attack phase, the note enters a decay phase, where the volume level 
+is gradually lowered down to the sustain level specified in the CAN bus packets. 
+When a note gets turned off, it exits the sustain phase and enters the release phase. 
+In the release phase the volume level of the note drops from the sustain value to 
+zero over a small period of time \cite{asr-book}. 
+\par\bigskip\noindent
+In order to achieve a highly optimised result, the mathematics involved in the 
+implementation of the above features avoids the use of floating point types. 
+This is due to the inefficient implementation of floating number systems on the 
+host LPC1768 board, and lack of floating point hardware 
+\cite{kormanyos2013real, lpc1768-datasheet}.
+Instead, a fixed point library was created. This uses the first 18 bits of a 
+32 bit number as the integer value, and the last 14 bits as the decimal value, 
+allowing accurate calculations to be performed rapidly. 
+Hence providing a significant improvement in the capabilities of the system. 
 
 \section{How the problem was broken down for individual members}
 
