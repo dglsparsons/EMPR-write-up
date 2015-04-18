@@ -17,7 +17,7 @@ The first technical challenge faced in the implementation of the group's solutio
 was the retrieval of data from the controller area network bus (CAN bus). The 
 implemented solution uses an advanced system to ensure that no transmissions of 
 data packets are missed. 
-Each time data is transmitted on the CAN bus the MBED board receives an interrupt. 
+Each time data is transmitted on the CAN bus the MBED board generates an interrupt. 
 The interrupt service routine copies the data transmitted on the CAN bus into 
 the devices memory, ready for processing at a later stage. 
 By avoiding the processing of any data in the interrupt handler, it is ensured 
@@ -28,7 +28,7 @@ The data packets are stored in memory as a queue.
 This enables a first-in-first-out approach to processing of the data to occur. 
 The CAN data packets are decoded according to the given specification. 
 There are two possible types of packets received: A basic data packet containing 
-information for the frequency, volume, channel and control data of a note, or, 
+information for the frequency, volume, channel and control data of a note; or, 
 a text packet, containing information for a track name, beats per minute of the 
 track, and channel numbers and names \cite{data-packet}.
 If the packet received is a data packet, it interacts directly with the audio 
@@ -61,7 +61,7 @@ To provide a user friendly and simplistic user interface, enabling a high level
 of control and interaction with the device, a shell style user interface was 
 created. 
 Typically used for interaction with a computer, a shell is a device that takes 
-a user input, and converts their input (command) into the desired functionality. 
+a user input, and converts the input (command) into the desired functionality. 
 Simply put, a shell is "a program that takes your commands from the keyboard and 
 gives them to the operating system to perform" \cite{shell-def}.
 For the MBED system, communication with the device occurs via serial, with a 
@@ -70,21 +70,21 @@ the device.
 This enables the user to enter commands via the computer keyboard, or other input
 method, and the MBED device to then execute these commands. 
 \par\bigskip\noindent
-When a character is entered into the computer terminal, an interrupt is generated
+When an input is entered into the computer terminal, an interrupt is generated
 on the host MBED board. 
 The interrupt handler first determines whether the user's input is a special case 
 character (BACKSPACE, or ENTER), or a regular character. 
 If the input is a regular character, it is stored in memory for processing at a 
 later stage, as well as being transmitted over serial to be displayed on the 
 computer screen. 
-If the input character is BACKSPACE the last character is removed from the 
-stored input, and a special character sequence is sent to the computer in order 
-to delete the displayed characters from the screen. This only occurs if the 
-user has an input to delete 
+If the input character is BACKSPACE, the last character entered is removed from 
+the input stored in the devices memory, and a special character sequence (\textbackslash x8\textbackslash x8)
+is sent to the computer in order to delete the displayed characters from the 
+screen. This will only occur if the user has an input to delete.
 Finally, if the user inputs the ENTER key, a flag is toggled on, indicating that 
 the user's input requires processing. Processing of the user's input is not done 
-in the interrupt handler in order to avoid unpredictable behaviour through race 
-conditions.  
+within the interrupt handler in order to avoid unpredictable behaviour through 
+the potential occurrence of race conditions.  
 \par\bigskip\noindent
 Processing of the user's input occurs in three different stages. 
 First the input is parsed, where it is split up into separate words. This 
@@ -92,15 +92,15 @@ simplifies the logic needed to determine the correct functionality to perform.
 Parsing is done using a similar method as the CAN bus text packets \cite{text-parser}, 
 however, modifications have been made to set a limit on the word count of the 
 user's input. This prevents the situation where an input consisting of a large 
-number of separate words results in excessive memory consumption, causing the 
-device to crash. 
+number of separate words results in excessive memory consumption, causing 
+the device to crash from writing into unassigned memory. 
 Following the parsing of text, the user's input is matched to possible input 
 commands using strcmp for string comparisons. This determines the correct 
 functionality of the user's input. 
 Once the correct functionality has been determined, the user's command is executed. 
-Depending on what this command is, interaction may involve alterations being made 
-to variables, states of the system, or may interface with the audio, or CAN bus 
-segments of the group solution. 
+Depending on what this command is, the execution of the user's input may involve 
+alterations being made to variables, states of the system, or may interface with 
+the audio, or CAN bus segments of the group solution. 
 
 \subsection*{Keypad and LCD interaction}
 
@@ -129,48 +129,53 @@ Furthermore the LCD display was further extended, adding the capability for
 scrolling text. 
 This was implemented using pointer manipulation to incrementally iterate through 
 a text string, and periodically update the display with this string using 
-a system timer (SysTick).  
+a system timer (SysTick). 
 
 \subsection*{Audio Processing}
 
 The audio processing aspect of the group solution was very thorough, and 
-incorporated a vast array of different features to produce a high quality sound 
-from the end product.
+incorporated a vast array of different features to produce a high quality audio
+output from the end product.
 \par\bigskip\noindent
-No information is known about the audio output, and wave-forms must be generated 
-from first principles. This is implemented using a look-up table. 
+No information is known about the desired audio output, and consequently 
+wave-forms must be generated from first principles. 
+This is implemented using a look-up table. 
 In order to store a look-up table on the device, a tool was created to convert 
-an audio sample into a list of values. This enables the possibility for alternate 
-waves tables such as a piano sample to be incorporated into the solution, in 
-addition to the more typical sine waves. This list of values was then stored in 
-the flash memory on the device.
-For each note, the wave-table is stepped over, and interpolated to provide readings 
-between different values. 
-The value at each moment in time then determines the output voltage. 
-Only one wave table is used for the audio playback, different frequency notes are 
-played back by adjusting the rate at which the wave-table is looped over. This is 
+an audio sample into a list of values.
+This enables the possibility for alternate waves tables such as a piano samples 
+to be incorporated into the solution, in addition to the more simplistic sine 
+waves, or the square waves incorporated in our teams solution.
+This list of values was then stored in the flash memory on the device.
+For each note requiring audio playback, the wave-table is stepped over, and 
+interpolated to provide readings between different values. 
+This value at each moment in time then determines the output voltage. 
+Only one wave table is used for all the audio playback, different frequency notes are 
+simulated by adjusting the rate at which the wave-table is looped over. This is 
 achieved my manipulating the step-size: stepping through the wave-table at a 
 faster rate corresponds to playback of a higher frequency note. The step-size 
 for each note is determined as each note is turned on by simply dividing the 
 frequency of the note by the frequency of the wave-table. This method for the 
 generation of notes is known as an oscillator \cite{puckette2007theory}.
 \par\bigskip\noindent
-In order to allow playback of more than one note at any one time, a method of 
-audio synthesis, known as Additive Synthesis was implemented. This is a simplistic
-method of representing multiple notes, and involves adding together their 
-waveform to create a composite wave \cite{miranda2012computer}. In the 
-implemented solution, it is not possible to combine the wave tables together, 
-and instead the values generated for each sample are added together. 
-In order to create an output with consistent volume, the end value is also 
-divided by the total number of notes that are playing at that moment in time. 
+In order to allow playback of more than one note at any one time a method of 
+audio synthesis, known as Additive Synthesis, was implemented. This is a simplistic
+method of representing multiple notes, and involves adding together the 
+wave-forms of each notes to create a composite wave \cite{miranda2012computer}. 
+In the implemented solution, it is not possible to combine wave tables 
+together as we only use one. Instead, the values generated by the oscillator 
+method at each moment in time are added together. 
+In order to create an output with consistent volume, the end value of the 
+additive synthesis is also divided by the total number of notes that are playing 
+at that moment in time. 
 \par\bigskip\noindent
 In order to enable each individual note to have a volume level, the 
 value read from the wave-table is multiplied by a number between 0 and 1 
 corresponding to the volume level of the note. 
 However, the human ear does not perceive all frequencies equally, and further 
 modification to the volume of each note has to be made in order to compensate 
-for this. Equal volume loudness curves for different frequencies are described 
-by the ISO 223:2003 standard. %TODO -- FIND A CITATION FOR THIS SPEC. 
+for this. Equal volume loudness curves describing how volume levels perceived by 
+human ears varies for different frequencies are described 
+by the ISO 226:2003 standard \cite{iso-226}. 
 Data points from this curve are stored in the devices flash memory, and 
 interpolated to provide an accurate correction value for each frequency. This is 
 applied to each individual note to produce a consistent sounding output. 
@@ -178,7 +183,7 @@ applied to each individual note to produce a consistent sounding output.
 To further the accuracy of the output audio sample, an attack-decay-sustain-release 
 model is implemented for each note. This simulates the effect of a musical 
 instrument's variation in volume and sound over time by incorporating a state 
-based system. As the note is initially turned on it infers the attack phase. 
+based system. As the note is initially turned on it enters the attack phase. 
 In the attack phase the volume rises from 0 to the 100 (maximum volume) over a 
 short duration of time.
 Following the attack phase, the note enters a decay phase, where the volume level 
@@ -190,22 +195,28 @@ zero over a small period of time \cite{asr-book}.
 In order to achieve a highly optimised result, the mathematics involved in the 
 implementation of the above features avoids the use of floating point types. 
 This is due to the inefficient implementation of floating number systems on the 
-host LPC1768 board, and lack of floating point hardware 
+host LPC1768 board, caused by a lack of floating point hardware 
 \cite{kormanyos2013real, lpc1768-datasheet}.
 Instead, a fixed point library was created. This uses the first 18 bits of a 
 32 bit number as the integer value, and the last 14 bits as the decimal value, 
-allowing accurate calculations to be performed rapidly. 
-The implementation of a fixed point arithmetic library therefore provides a 
-significant improvement in the capabilities of the system. 
+allowing accurate decimal calculations to be performed rapidly. 
+The implementation of a fixed point arithmetic library therefore provided a 
+significant improvement to the capabilities of the system. 
 \par\bigskip\noindent
 Finally, once the audio output is generated, it is output to the Digital to 
 Analogue Converter (DAC). This occurs through the use of Direct Memory Access (DMA).
 This removes the requirement to process any information: the DAC is given 
-direct access to the memory locations needed for outputting audio sound, and as 
-a result, there is a significant increase in performance 
-\cite{barr1999programming}. From the DAC, an analogue signal is output. This is 
-then connected to a speaker for audio playback. 
-In our group solution, %TODO -- write about the speaker and circuit we used
+direct access to the memory locations needed for outputting audio sound. Rather 
+than requiring any processing, the DAC simply reads the values whenever required 
+to create the desired sample rate (20,000Hz).
+There is a significant increase in performance caused by the use of Direct Memory 
+Access, due to the removal of interaction with the devices central processing unit
+(CPU) \cite{barr1999programming}. 
+In our group solution, a speaker is connected directly to the output of the DAC 
+to provide audio playback. 
+The speaker is created using an SSM2305 amplifier circuit \cite{speaker}. This 
+amplifier is a low power device capable of running off the MBED board's 
+5 Volt power rails, meaning it does not require an external power source. 
 
 \section{How the problem was broken down for individual members}
 
@@ -266,10 +277,11 @@ the beginning of the project in audio processing meant that it was an obvious
 choice for Liam to look into the generation and playback of music. The 
 specification was exceeded with his contributions, not only did his solution 
 generate an audio tone corresponding to the frequency, duration, and volume 
-levels specified in the data stream, but implemented an attack sustain release 
+levels specified in the data stream, but implemented an attack-decay-sustain-release 
 curve to improve the realism of the output sound, as well as additive synthesis 
 enabling multiple notes to be played simultaneously, and his solution also 
-used DMA and a fixed point library to improve the efficiency of the system. 
+used DMA and a fixed point library to improve the efficiency of the system, and 
+a speaker circuit.
 
 \section{Technical innovation and implementation of each member}
 \subsection*{Mingzhao Zhao}
@@ -313,12 +325,11 @@ to each song being played required parsing in order to extract any useful
 information. Therefore, a text parser, extracting the useful information from 
 these packets to the device was implemented using a state based solution. 
 \par\bigskip\noindent
-Furthermore, following an 
-instance where the physical memory (RAM) on the device was fully used up, Shivam 
+Furthermore, Shivam 
 discovered that the device contains an additional 32Kb of memory, 
-typically reserved for communicating to a USB or Ethernet device. However, 
-due to the reserved status of this memory, a memory allocator was required for 
-it to be utilised. 
+typically reserved for communicating to a USB or Ethernet device \cite{lpc1768-datasheet}.
+However, due to the reserved status of this memory, a memory allocator was 
+required for it to be utilised. 
 Therefore, the group solution contains a memory allocator allowing access to 
 a further 32Kb of memory. This allows a much greater amount of information to be 
 stored on the device. 
@@ -361,7 +372,7 @@ the rest of the group solution.
 \subsection*{Liam Fraser}
 Liam Fraser, following an interest in music technology was eager to work on the 
 audio code for the project. He implemented a simplistic system, allowing musical 
-notes to be generated by scanning, and interpolating over a look up table. He then 
+notes to be generated by looping, and interpolating over a look up table. He then 
 looked into generating synthesised music, and implemented additional synthesis 
 into the project, allowing multiple notes to be playing simultaneously. However, 
 on testing his synthesis code on the MBED board, it rapidly became apparent that 
@@ -374,8 +385,8 @@ output to work independent of the central processing unit (CPU). This
 therefore speeds up the processing of any audio, as the CPU does not have to be 
 involved for any sound to be output, only for the generation of audio samples 
 \cite{dma-book}. In addition, to create a more realistic sounding output from the 
-device, an attack sustain release state model was incorporated for each note. 
-This gives an initial rise in volume as the note is turned on, and a fading out 
+device, an attack-decay-sustain-release state model was incorporated for each note. 
+This gives an initial spike in volume as the note is turned on, and a fading out 
 of the note as it is turned off, producing a volume curve more typical of an 
 actual instrument \cite{asr-book}.
 
