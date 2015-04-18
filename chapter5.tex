@@ -6,18 +6,20 @@
 
 My individual contribution to the project consisted primarily of a shell style 
 interface for the host board, allowing user interaction via a computer keyboard 
-and monitor, but also consisted of the modification and extension of previously 
-existing LCD screen code, to allow a much greater degree of control over the 
-attached LCD display. 
+and monitor. However, my individual contribution also consisted of the 
+modification and extension of previously existing LCD screen code in order to 
+achieve a much greater degree of control over the attached LCD display. 
 \par\bigskip\noindent
 The shell style interface was set up using an interrupt based system from the 
-computer. This enables users to enter commands through any input method for 
-the computer and process them on the device. This method also allows the user
+computer. This enables users to enter commands into GNU Screen running on 
+the computer through any input method. These inputs form commands that are 
+then processed and executed on the device to perform tasks such as displaying 
+information on the host board, adjusting device settings, or allowing users 
 to display useful information through the computer monitor.
 \par\bigskip\noindent
 There were a wide range of possible input commands available through this 
 interface, with many possible options and settings being adjusted on the fly. 
-By typing 'help' and pressing enter, the user could view a list of possible 
+By entering 'help' and pressing enter, the user could view a list of possible 
 commands, as seen below: 
 
 \begin{table}[h]
@@ -37,14 +39,14 @@ channel number channel. To play all, use setid all\\
 showid                 & : Shows the id of the current channel\\
 showtrack              & : Shows the current track name on the LCD\\
 showchan               & : Scrolls the channels on the LCD\\
-showpacket             & : Prints CAN packets until a key is pressed\\
-scroll text line & : displays scrolling text on line line of the 
-LCD screen\\
 \end{tabular}
 \end{table}
 % 2 tables because there's a page break in between
 \begin{table}[h]
 \begin{tabular}{lp{10cm}}
+showpacket             & : Prints CAN packets until a key is pressed\\
+scroll text line & : displays scrolling text on line line of the 
+LCD screen\\
 stopscroll line      & : stops scrolling text on the screen. To stop both lines, 
 enter line as 2 or all.\\
 scrollenable line    & : enables scrolling text on the screen.\\
@@ -56,31 +58,39 @@ Note - you may also have to call stopscroll to fully clear\\
 \end{table}
 
 \par\bigskip\noindent
-This therefore provides the user with a high amount of control over the devices 
-output though both audio and visual elements, as well as a high level of control 
-over the devices functionality. Furthermore, the interaction with 
-the on board LCD display can be clearly seen through the above commands, hence 
-explicating the necessity for the alterations made to LCD display code to permit 
-a greater degree of control, and enable features such as scrolling text, and 
-writing to only part of the LCD screen. 
+The user is therefore provided with a high degree of control over the devices 
+functionality. The user interface provided by the shell therefore enables the 
+user to display useful information on the computer screen, on the device, 
+enter and display custom messages, adjust the devices 
+mode of functionality (printing packets, or playing audio), and also gives the 
+user control over the audio output. 
+Interaction with the on board LCD display can be clearly seen through the above 
+commands, hence explicating the necessity for alterations made to LCD display 
+code.
+The high degree of control over the LCD additionally enables additional features 
+such as scrolling text, or writing multiples times without clearing the LCD 
+display. 
 
 \section{Discussion of Technical Innovation and Implementation}
 
 The implementation of the shell style interface and the improvement of the LCD 
-display code consists of many different technical challenges, and required many 
-different technical challenges throughout. First and foremost there was the 
-challenge of setting up a system to enable user input to be recognised. This is 
-achieved using an interrupt based system, such that each new character entered 
-into a screen set up for the board will trigger an interrupt. When the 
-interrupt is triggered, the character that was input is transferred to the host 
-board and stored into memory for processing at a later stage. This incorporated 
-several different technical challenges in the implementation, such as figuring 
-out how to set up the interrupt, and how to allocate memory for storing any 
-characters input. The simplest solution for allocating memory was used: a set 
-input limit is defined, and any characters that are input past this count are 
-not stored in memory. Other technical challenges involved handling special input 
-cases such as backspace to delete a character from memory, but only if there 
-was any input to delete. 
+display code encountered many different technical challenges throughout. 
+The first technical challenge faced was setting up a system enabling user input 
+to be transmitted to the device. 
+Communication with the MBED board occurs via serial. As text is entered into the 
+terminal window of the computer, an interrupt is generated. This input transfers 
+the text entered in the terminal into the devices memory for processing at a 
+later stage, as well as printing it out on the display so the user can see it. 
+Setting up this interrupt provided a significant technical challenge, however, 
+once this was set up a strong level of communication with the device was enabled. 
+A further challenges was then presented with the allocation of memory to store the 
+user's input. 
+The simplest solution for allocating memory was used: a set input limit is 
+defined, and any user input past this limit is not stored in memory, or printed 
+to the computer monitor - effectively it is ignored. 
+Furthermore, special case characters such as BACKSPACE required additional 
+management to remove both the characters displayed on the monitor, and those 
+stored in memory. 
 \par\bigskip\noindent
 When the enter key is pressed (\textbackslash r\textbackslash n received on 
 the interrupt), processing of the user's input command begins. 
@@ -116,26 +126,29 @@ allow a much greater degree of control over the display.
 The overhaul of the LCD display code provided a significant technical challenge. 
 The initial desire was simply to allow scrolling text on the display, however 
 it soon became clear that further alterations were required. Initially the LCD 
-code would write to the LCD display, and clear it. To match what I wished to 
-achieve, it was necessary to first figure out how to write only to a single 
-line of the LCD display, without clearing the other line. This required 
-accessing only certain memory addresses of the LCD display buffer in order to 
-prevent clearing parts of the display. Following the successful implementation 
-of the capability to write to each individual line of the LCD display, the next 
-target was to give the ability to scroll text across the display, in order to 
-effectively increase the number of characters that could be read. 
-
+code would clear the display prior to every write command. To enable text to be 
+written to separate lines of the display independently, or to enable scrolling 
+text on one or both of these lines it was therefore necessary to remove this 
+behaviour, and discover how to write only to a section of the LCD display. 
+This required accessing only certain memory addresses of the LCD display buffer 
+in order to prevent clearing parts of the display. Following the successful 
+implementation of the capability to write to each individual line of the LCD 
+display, the next target was to give the ability to scroll text across the 
+display, in order to effectively increase the number of characters that could 
+be read. This was more straightforward and was achieved using pointers to 
+manipulate the current position in a string, and a system timer (SysTick) to 
+update the relevant section of the display at regular intervals.
 
 \section{Testing Strategy, and the Results}
 
 Due to the nature of the extension project, testing was relatively straightforward. 
 Using the debugging library, it was very easy to check the effects of any command 
 that was entered to ensure correct behaviour. Therefore, any errors or undesirable 
-behaviour was rapidly discovered. Furthermore, the interface became a central 
+behaviour were rapidly discovered. Furthermore, the interface became a central 
 aspect of the group solution, and as a result was used by each member of the 
 group on a regular basis to interact with the device. Through each individuals 
-interaction many test cases were encountered, and therefore the device has 
-undergone a continual and thorough testing strategy.
+interaction many test cases were encountered, and therefore my individual extension 
+underwent a continual and thorough testing scenario. 
 \par\bigskip\noindent
 The results of the testing strategy were very positive. The shell style interface 
 had a large number of features by the end of the project, and worked very well. 
