@@ -4,7 +4,7 @@
 % improved, and lessons learned. 
 \section{Reflective Summary of Team Work}
 
-Team work was an essential part of the project, and an area where my group 
+Team work was an essential part of the project, and an area in which my group 
 excelled. Each individual was allowed to select their own areas of the project 
 to work on, and furthermore regular meetings and code review sessions both ensured 
 that no individual was overwhelmed, and ensured that contributions to the 
@@ -13,26 +13,27 @@ solution were of the highest quality.
 The group solution achieved every point of the specification in an elegant 
 manner, and had a wealth of additional functionality through additions to the 
 project. 
-Examples of these additions could include: the ability to synthesise music and 
+Examples of these additions include: the ability to synthesise music and 
 play back multiple notes on each channel and multiple channels simultaneously; 
 an improved user interaction via a shell style interface complete with the 
 ability to adjust settings and change mode of operation without re-installing the 
-device; or a more realistic sounding audio playback through the use of attack
-decay sustain release models. 
+device; and a more realistic sounding audio playback through the use of 
+attack-decay-sustain-release models. 
 
 \section{Reflective Summary of Individual Work}
 
 My individual extension project was the implementation of a style shell user 
 interface, enabling user interaction with the MBED board through interaction 
 with a computer. This occurred primarily through serial communication between the 
+MBED device and the computer. 
 The addition of the shell style interface 
 provided a wide range of valuable tools throughout the course of the project, 
 and the end result was a great degree of control over the 
-host board. Examples of the control given includes: 
+host board. Examples of the control given include: 
 \begin{itemize}
     \item The ability to play notes
     \item The ability to change the device volume
-    \item the ability to write custom text to the LCD display 
+    \item The ability to write custom text to the LCD display 
     \item The ability to change which channel of music is being listened to
     \item The ability to view useful information, such as the track name, channel,
 or what notes are currently being played
@@ -48,9 +49,9 @@ result was very rewarding and one that I can be proud of.
 \section{What went well}
 
 My group had a very successful end product, and this was the result of many 
-aspects of the project going very well. From the beginning of the project it was 
+aspects of the project going very well. From the beginning of the project, it was 
 clear that each member of the group was very enthusiastic about producing a high 
-quality end result, this enabled a positive working atmosphere where each group 
+quality end result, which enabled a positive working atmosphere where each group 
 member was free to work on whatever aspect they desired as the project moved on.
 The use of the version control software, git, was a particular strength of the 
 project. This enabled group members to work on separate branches for individual 
@@ -72,23 +73,23 @@ problem we encountered was in the first week of the project. After spending a
 week attempting to receive data from the CAN bus and failing, we decided to use 
 the online tool-chain to set up a device to send CAN packets, and plugged this 
 into our existing code. This worked perfectly, and led to the discovery that 
-the CAN bus was not working everywhere within the lab. Because of this a lot of 
+the CAN bus was not working everywhere within the lab. Because of this, a lot of 
 time within the first week of the project was spent attempting to correct code 
 that was already working. 
 \par\bigskip\noindent
 The second issue that was faced was the inconsistent use of version control 
 software. The majority of the group (Myself, Shivam and Liam) all used git, and 
 github as a central location allowing us to effectively work as a team on the 
-project. Mingzhao, despite being shown how to use git many times, elected not 
+project. Mingzhao, despite being shown how to use git many times, chose not 
 to use any version control software. This made interaction with his contributions
 to the project much more difficult, and keeping up to date with his progress a 
-much more difficult task. 
+challenging task.
 
 \section{What could have been improved}
 
 Due to the nature of the project, there is a large amount of extension to the 
 basic functionality that can be added. Our group solution extended the base 
-implementation a long way, however, additional features were nearly implemented
+implementation a long way, however additional features were nearly implemented
 that could have made a good improvement to the finished product. 
 There are three examples of features that were not implemented in the final 
 version of our project, but would have contributed to an overall improvement of 
@@ -103,9 +104,9 @@ wave tables without the need to re-install the binary on the device. This would
 allow a further degree of control over the device, and could be used to alternate
 to more pleasurable sounding outputs for certain channels. 
 \par\bigskip\noindent
-The second potential improvement that could have been made ties in to the first, 
+The second potential improvement that could have been made links with the first, 
 and is the implementation of drum samples to create a more complete sounding 
-audio track. On the CAN bus sixteen channels of audio data is sent corresponding 
+audio track. On the CAN bus sixteen channels of audio data are sent corresponding 
 to the different instruments. Channel 11 typically represents a drum track, and 
 for our project this channel is being ignored. This therefore is a potential
 improvement that could have been made. 
@@ -123,20 +124,20 @@ interactions between the two devices.
 \section{Lessons Learned}
 
 The project has served as a valuable learning experience throughout its duration
-in a variety of different ways. 
+in a variety of ways. 
 First of all I have developed a much stronger understanding of the technical 
 intricacies of programming in C, in particular with regards to embedded sytems 
 - while the language itself is very minimal and 
 straightforward to learn, there are many small details that require careful 
 thought and consideration, such as the use of pointer manipulation. 
 In addition, concepts such as interrupts, SysTick, or direct memory access are 
-not entirely unfamiliar, however, the implementation desired features using 
+not entirely unfamiliar, but the implementation desired features using 
 these tools has been a new experience.
 The project has also greatly developed my understanding of music technology. 
-Through meeting the projects requirements to generate audio samples, and our own 
-desire to make these samples sound more realistic a lot of research has been done 
+Through meeting the project's requirements to generate audio samples and our own 
+desire to make these samples sound more realistic, a lot of research has been done 
 into this field. It has been fascinating to research and 
-learn about all the different aspects involved in our groups solution, such as 
+learn about all the different aspects involved in our group's solution, such as 
 sound synthesis, ADSR curves, and equal volume adjustment. 
 In addition, I have not worked on a group project before where version control 
 software has been so strongly used. Throughout the project I have gained a much 

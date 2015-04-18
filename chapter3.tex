@@ -14,25 +14,25 @@ explaining in detail how each feature is implemented.
 \subsection*{Controller Area Network Bus Processing}
 
 The first technical challenge faced in the implementation of the group's solution
-was the retrieval of data from the controller area network bus (CAN bus). The 
+was the retrieval of data from the Controller Area Network bus (CAN bus). The 
 implemented solution uses an advanced system to ensure that no transmissions of 
 data packets are missed. 
 Each time data is transmitted on the CAN bus the MBED board generates an interrupt. 
 The interrupt service routine copies the data transmitted on the CAN bus into 
 the devices memory, ready for processing at a later stage. 
-By avoiding the processing of any data in the interrupt handler, it is ensured 
+By avoiding the processing of any data in the interrupt handler, it ensures 
 that no race conditions can occur, and therefore data transmissions cannot be 
 missed. 
 \par\bigskip\noindent
 The data packets are stored in memory as a queue. 
 This enables a first-in-first-out approach to processing of the data to occur. 
 The CAN data packets are decoded according to the given specification. 
-There are two possible types of packets received: A basic data packet containing 
-information for the frequency, volume, channel and control data of a note; or, 
-a text packet, containing information for a track name, beats per minute of the 
+There are two possible types of packets received: a basic data packet containing 
+information for the frequency, volume, channel and control data of a note; or
+a text packet containing information for a track name, beats per minute of the 
 track, and channel numbers and names \cite{data-packet}.
 If the packet received is a data packet, it interacts directly with the audio 
-code, turning on, off, or adjusting notes corresponding to the information 
+code: turning on, off, or adjusting notes corresponding to the information 
 contained. 
 Alternatively, if the packet is a text packet, it requires further processing to 
 extract the information contained. 
@@ -46,18 +46,18 @@ been corrupted.
 If the check-sum value is correct, and the text packets have been correctly 
 received, they are parsed in order to extract their content into a more usable 
 format. 
-This is achieved through a state based text-parser, that draws inspiration from 
+This is achieved through a state based text-parser which draws inspiration from 
 a stack-overflow post \cite{text-parser}. 
 The text parser iterates through the text, alternating state depending on whether 
 the current location is within a word, inside quotation marks or inside 
 white-space. 
 This breaks the text into smaller sections and removes quotation marks, 
 enabling it to be presented in a useful format, such as displaying the track 
-name on the LCD display, or on the computer screen. 
+name on the LCD display or on the computer screen. 
 
 \subsection*{Shell User Interface}
 
-To provide a user friendly and simplistic user interface, enabling a high level 
+To provide a user-friendly and simplistic user interface, enabling a high level 
 of control and interaction with the device, a shell style user interface was 
 created. 
 Typically used for interaction with a computer, a shell is a device that takes 
@@ -90,12 +90,12 @@ Processing of the user's input occurs in three different stages.
 First the input is parsed, where it is split up into separate words. This 
 simplifies the logic needed to determine the correct functionality to perform.
 Parsing is done using a similar method as the CAN bus text packets \cite{text-parser}, 
-however, modifications have been made to set a limit on the word count of the 
+however modifications have been made to set a limit on the word count of the 
 user's input. This prevents the situation where an input consisting of a large 
 number of separate words results in excessive memory consumption, causing 
 the device to crash from writing into unassigned memory. 
 Following the parsing of text, the user's input is matched to possible input 
-commands using strcmp for string comparisons. This determines the correct 
+commands using \texttt{strcmp} for string comparisons. This determines the correct 
 functionality of the user's input. 
 Once the correct functionality has been determined, the user's command is executed. 
 Depending on what this command is, the execution of the user's input may involve 
@@ -117,9 +117,9 @@ Furthermore, a debounce system was generated, only allowing one successful
 interrupt to occur once every half a second. This was incorporated using SysTick
 to determine the difference in time between inputs. 
 Following a successful input, the correct functionality was then determined and 
-executed, 
+executed. 
 \par\bigskip\noindent
-The LCD display was heavily utilised by the group solution, and had a wealth of 
+The LCD display was heavily utilised by the group solution and had a wealth of 
 features. 
 The LCD code enabled writing to only a section of the display, allowing different 
 information to be displayed on each line. 
@@ -128,7 +128,7 @@ section of the displays memory prior to updating the display.
 Furthermore the LCD display was further extended, adding the capability for 
 scrolling text. 
 This was implemented using pointer manipulation to incrementally iterate through 
-a text string, and periodically update the display with this string using 
+a text string and periodically update the display with this string using 
 a system timer (SysTick). 
 
 \subsection*{Audio Processing}
@@ -151,15 +151,15 @@ interpolated to provide readings between different values.
 This value at each moment in time then determines the output voltage. 
 Only one wave table is used for all the audio playback, different frequency notes are 
 simulated by adjusting the rate at which the wave-table is looped over. This is 
-achieved my manipulating the step-size: stepping through the wave-table at a 
+achieved by manipulating the step-size: stepping through the wave-table at a 
 faster rate corresponds to playback of a higher frequency note. The step-size 
 for each note is determined as each note is turned on by simply dividing the 
 frequency of the note by the frequency of the wave-table. This method for the 
 generation of notes is known as an oscillator \cite{puckette2007theory}.
 \par\bigskip\noindent
-In order to allow playback of more than one note at any one time a method of 
-audio synthesis, known as Additive Synthesis, was implemented. This is a simplistic
-method of representing multiple notes, and involves adding together the 
+In order to allow playback of more than one note at any one time, a method of 
+audio synthesis known as Additive Synthesis was implemented. This is a simplistic
+method of representing multiple notes and involves adding together the 
 wave-forms of each notes to create a composite wave \cite{miranda2012computer}. 
 In the implemented solution, it is not possible to combine wave tables 
 together as we only use one. Instead, the values generated by the oscillator 
@@ -176,7 +176,7 @@ modification to the volume of each note has to be made in order to compensate
 for this. Equal volume loudness curves describing how volume levels perceived by 
 human ears varies for different frequencies are described 
 by the ISO 226:2003 standard \cite{iso-226}. 
-Data points from this curve are stored in the devices flash memory, and 
+Data points from this curve are stored in the device's flash memory, and 
 interpolated to provide an accurate correction value for each frequency. This is 
 applied to each individual note to produce a consistent sounding output. 
 \par\bigskip\noindent
@@ -184,7 +184,7 @@ To further the accuracy of the output audio sample, an attack-decay-sustain-rele
 model is implemented for each note. This simulates the effect of a musical 
 instrument's variation in volume and sound over time by incorporating a state 
 based system. As the note is initially turned on it enters the attack phase. 
-In the attack phase the volume rises from 0 to the 100 (maximum volume) over a 
+In the attack phase the volume rises from 0 to 100 (maximum volume) over a 
 short duration of time.
 Following the attack phase, the note enters a decay phase, where the volume level 
 is gradually lowered down to the sustain level specified in the CAN bus packets. 
@@ -203,7 +203,7 @@ allowing accurate decimal calculations to be performed rapidly.
 The implementation of a fixed point arithmetic library therefore provided a 
 significant improvement to the capabilities of the system. 
 \par\bigskip\noindent
-Finally, once the audio output is generated, it is output to the Digital to 
+Finally, once the audio signal is generated, it is outputted to the Digital to 
 Analogue Converter (DAC). This occurs through the use of Direct Memory Access (DMA).
 This removes the requirement to process any information: the DAC is given 
 direct access to the memory locations needed for outputting audio sound. Rather 
@@ -223,7 +223,7 @@ amplifier is a low power device capable of running off the MBED board's
 The breakdown of our solution into components individual members could work on 
 was a great strength of our team. Each person worked on an aspect of the project 
 that they found interesting, and throughout the project we had regular feedback 
-on all our work in order to make sure we were meeting our specifications and 
+on all our work to ensure we were meeting our specifications and 
 that nobody was out of their depth. Below I have divided up the work that each 
 individual completed during the duration of the project, and why they were 
 working on that aspect of the project. 
@@ -235,7 +235,7 @@ decided to target user interaction with the device via the keypad. This
 provided a possible method of user input, as well as providing a means to 
 optionally filter data, or control the volume output of the device. 
 Following suggestions 
-of other group members he decided to convert the previous keypad polling method 
+of other group members, he decided to convert the previous keypad polling method 
 incorporated in the mini-projects into an interrupt based system, removing the 
 need for unnecessary CPU cycles to be used polling the device continually. 
 
@@ -251,7 +251,7 @@ Furthermore, on realisation of additional device memory, Shivam wrote a memory
 allocator allowing the additional memory to be used constructively, further 
 optimising the system. 
 
-\subsection*{Myself (Douglas Parsons)}
+\subsection*{Douglas Parsons (Myself)}
 Following the mini projects, and from reviewing the specification, it was clear 
 that a strong level of user interaction with the device would provide valuable 
 debugging tools, could potentially allow settings to be changed without 
@@ -264,21 +264,22 @@ on allowing a further degree of interaction via the computer keypad. This
 enabled the user to preset an ID to filter out data, adjust the volume of the 
 output, display any data received on the CAN bus, as 
 well as adjust settings within the project without requiring a full reinstate.
-During the implementation of the shell it became clear that this could be a 
+During the implementation of the shell, it became clear that this could be a 
 valuable tool for displaying useful information such as the song name, and 
 therefore I additionally worked with the LCD display to enable a much greater 
-degree of control over what was displayed, enabling scrolling text, and writing 
+degree of control over what was displayed: enabling scrolling text and writing 
 to each line of the display individually.
 
 \subsection*{Liam Fraser}
 Liam has a strong background in music technology, taking the subject at A-level,
-and working on personal projects involving music. Furthermore his interest from 
+and working on personal projects involving music. Furthermore, his interest from 
 the beginning of the project in audio processing meant that it was an obvious 
 choice for Liam to look into the generation and playback of music. The 
-specification was exceeded with his contributions, not only did his solution 
+specification was exceeded with his contributions: not only did his solution 
 generate an audio tone corresponding to the frequency, duration, and volume 
 levels specified in the data stream, but implemented an attack-decay-sustain-release 
-curve to improve the realism of the output sound, as well as additive synthesis 
+curve to improve the realism of the output sound. 
+Additionally, Liam implemented additive synthesis, 
 enabling multiple notes to be played simultaneously, and his solution also 
 used DMA and a fixed point library to improve the efficiency of the system, and 
 a speaker circuit.
@@ -288,9 +289,9 @@ a speaker circuit.
 Mingzhao's work was primarily focused on implementing interaction via 
 the 16 digit keypad on the MBED board. The keypad was set up in the mini-projects 
 to allow user interaction through continually polling the keypad. However, due 
-to the limited speed of the processor it was decided that a better solution 
+to the limited speed of the processor, it was decided that a better solution 
 would be to use an interrupt based system.
-However, this caused additional problems with bounce on the switches: 
+However, this caused additional problems: 
 multiple interrupts could occur in a very short space of time due to bounces on 
 the switches. Many of these interrupts generated were redundant, or gave 
 nonsensical input values, and furthermore their rapidity caused race conditions 
@@ -306,8 +307,8 @@ presses that occurred too closely together were disregarded.
 \subsection*{Shivam Mistry}
 Shivam initially targeted the CAN bus, and was able to rapidly achieve a fully 
 functioning prototype. The original solution processed each packet as it was 
-received. However, as the complexity of songs increased it became clear that this 
-simplistic method was not going to be sufficient when many CAN packets require 
+received. However, as the complexity of songs increased, it became clear that this 
+simplistic method was not going to be sufficient when many CAN packets required
 processing in a short space of time.
 In order to improve the functionality, a queue was implemented. Packets were 
 added to the queue on being received, and processed whenever there was sufficient
@@ -323,7 +324,7 @@ not match the length specified by the check-sum were not processed, and therefor
 could not have any impact on the system. Furthermore, the text packets sent prior 
 to each song being played required parsing in order to extract any useful 
 information. Therefore, a text parser, extracting the useful information from 
-these packets to the device was implemented using a state based solution. 
+these packets to the device, was implemented using a state based solution. 
 \par\bigskip\noindent
 Furthermore, Shivam 
 discovered that the device contains an additional 32Kb of memory, 
@@ -356,6 +357,7 @@ different aspects of the group solution. A detailed understanding of each
 individuals contributions was required to manipulate their functionality, and 
 continual additions and updates were needed throughout the project as changes 
 were made. 
+\par\bigskip\noindent
 In addition to implementing the additional interfacing method of a shell style 
 interface, I focused on customisation of the mini-project LCD screen code in 
 order to allow a greater level of control. I implemented features such as the 
@@ -370,19 +372,19 @@ I worked alongside Mingzhao on combining his code with
 the rest of the group solution. 
 
 \subsection*{Liam Fraser}
-Liam Fraser, following an interest in music technology was eager to work on the 
+Liam's interest in music technology meant that he was eager to work on the 
 audio code for the project. He implemented a simplistic system, allowing musical 
 notes to be generated by looping, and interpolating over a look up table. He then 
 looked into generating synthesised music, and implemented additional synthesis 
 into the project, allowing multiple notes to be playing simultaneously. However, 
 on testing his synthesis code on the MBED board, it rapidly became apparent that 
 the use of floating point numbers was not sufficiently quick to produce clean 
-sounding audio. Therefore, a fixed point library was implemented, this allowed 
+sounding audio. Therefore, a fixed point library was implemented: this allowed 
 much quicker calculations to occur compared to those of floating point numbers. 
 Following this optimisation of the synthesis code, the synth code was further 
 optimised through the use of Direct Memory Access (DMA). This allowed the audio 
 output to work independent of the central processing unit (CPU). This 
-therefore speeds up the processing of any audio, as the CPU does not have to be 
+therefore sped up the processing of any audio, as the CPU does not have to be 
 involved for any sound to be output, only for the generation of audio samples 
 \cite{dma-book}. In addition, to create a more realistic sounding output from the 
 device, an attack-decay-sustain-release state model was incorporated for each note. 

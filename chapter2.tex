@@ -39,7 +39,7 @@ the specification aims, and enables a large scope for individual creativity with
 extensions to the specification.
 \par\bigskip\noindent
 The group task consisted of multiple different challenges, with the concept
-that the MBED board would continually receive data from a controller area network
+that the MBED board would continually receive data from a Controller Area Network
 bus (CAN bus). 
 A CAN bus is a type of network, commonly used for rapid 
 communication between embedded systems in situations such as aeroplanes and cars.
@@ -52,7 +52,7 @@ filter out those that do not correspond to the selected channel,
 and play notes corresponding to the frequency, volume, and duration specified 
 in the received packet.
 In addition the user must be able to view useful information, select the channel 
-id, and adjust the volume of the device. 
+ID, and adjust the volume of the device. 
 The full requirements for the group solution are as follows 
 \cite{specification}:
 \par\bigskip\noindent
@@ -66,7 +66,7 @@ to show data filtered according to a configurable instrument channel ID.
         \item 
             Receives CAN bus data continuously
         \item 
-            Has the ability to preset a local 'ID”
+            Has the ability to preset a local 'ID'
         \item 
             Can optionally filter the data according to it matching the preset ID
         \item 
@@ -92,7 +92,7 @@ the MBED peripherals board.
 \par\bigskip\noindent
 For our group solution, the specification was broken down into three separate 
 areas. 
-This allowed us to focus our expertise and interests on the aspect best 
+This allowed us to focus our expertise and interests on the aspects best 
 suited to each group member.
 The breakdown of the three sections was as follows: 
 \begin{itemize}
@@ -141,7 +141,7 @@ The implementation of an audible output therefore requires the generation and
 manipulation of a wave. 
 The most logical solution to generating a wave would be the use of a wave look-up 
 table, giving values for a range of different values. 
-However, this presents additional challenges of storing the wave-table in memory 
+However, this presents the additional challenges of storing the wave-table in memory 
 on the device, and interpolating between values accurately and rapidly. 
 Further areas of technical challenge arise in the production of a more authentic 
 sounding product. 
@@ -153,15 +153,15 @@ must also be implemented into the solution, vastly increasing the complexity.
 Sound synthesis is a particularly difficult problem, due to the possibility of 
 containing expensive mathematical calculations. 
 These calculations could slow down the processing of audio samples, resulting in
-a strange sounding end product. As a result the efficiency of sound synthesis is 
+a strange sounding end product. As a result, the efficiency of sound synthesis is 
 a vital consideration, and a significant challenge. 
 \par\bigskip\noindent
-The third technical challenge that can be presented is the ability for a user 
+The third technical challenge presented is the ability for a user 
 to interact with the device.
 The specification determines that the user must be able to control 
 the volume of the output, alter which channel of notes is being played, 
 and view useful information on the MBED board. 
-There are many different methods of interaction with the device, the most 
+There are many different methods of interaction with the device: the most 
 notable being communication via serial from a desktop computer, or interaction 
 through the peripheral accessories provided, such as the 16 digit keypad. 
 The user's interaction is not predictable or consistent, and similar to the CAN 
@@ -175,5 +175,5 @@ project.
 Aspects such as the audio synthesis code and the CAN bus code must be carefully 
 manipulated and tweaked in order to provide a level of user interaction for 
 settings such as the overall output volume, and filtering data from the CAN bus. 
-Furthermore any user interface must be both intuitive and user friendly, requiring
+Furthermore, any user interface must be both intuitive and user-friendly, requiring
 careful design considerations. 
